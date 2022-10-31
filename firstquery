@@ -1,0 +1,23 @@
+const mysql=require('mysql2');
+const connection=mysql.createConnection({
+    host:'localhost',
+    user:'root',
+    password:'rootpassword',
+    database:'text'
+});
+
+connection.query(
+    'SELECT  * FROM `table` WHERE `name` = "page"  AND `age` > 45' ,
+    function(err,result,fields){
+        console.log(result);
+        console.log(fields);
+        }
+);
+connection.query(
+    'SELECT * FROM `table` WHERE `name`=? AND `age` > ?',
+    ['page',45],
+    function(err,results){
+        console.log(results);
+    }
+
+);
