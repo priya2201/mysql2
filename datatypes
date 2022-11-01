@@ -1,0 +1,166 @@
+Enter password: ************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 90
+Server version: 8.0.30 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use my_db;
+Database changed
+mysql> create table n_tab(
+    -> id int(5)NOT null,
+    -> name varchar(30),
+    -> city varchar(30)
+    -> );
+Query OK, 0 rows affected, 1 warning (0.05 sec)
+
+mysql> desc n_tab;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int         | NO   |     | NULL    |       |
+| name  | varchar(30) | YES  |     | NULL    |       |
+| city  | varchar(30) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into n_tab (id,name,city) values(1,'tushar','mulund');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into n_tab (id,name,city) values(1,'tushar','mulund'),(;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> insert into n_tab (id,name,city) values(1,'tushar','mulund'),(2,'priya','chembur');
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from n_tab;
++----+--------+---------+
+| id | name   | city    |
++----+--------+---------+
+|  1 | tushar | mulund  |
+|  1 | tushar | mulund  |
+|  2 | priya  | chembur |
++----+--------+---------+
+3 rows in set (0.00 sec)
+
+mysql> alter table n_tab add column mobile int(10) unique key;
+Query OK, 0 rows affected, 1 warning (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> select * from n_tab;
++----+--------+---------+--------+
+| id | name   | city    | mobile |
++----+--------+---------+--------+
+|  1 | tushar | mulund  |   NULL |
+|  1 | tushar | mulund  |   NULL |
+|  2 | priya  | chembur |   NULL |
++----+--------+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> insert into n_tab(name,city,mobile) values('bhavesh','thane',9234567811);
+ERROR 1264 (22003): Out of range value for column 'mobile' at row 1
+mysql> insert into n_tab(name,city,mobile) values('bhavesh','thane',923456781);
+ERROR 1364 (HY000): Field 'id' doesn't have a default value
+mysql> insert into n_tab (id,name,city,mobile) values(1,'tushar','mulund',99234567),(3,'priya','chembur',787878234);
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from n_tab;
++----+--------+---------+-----------+
+| id | name   | city    | mobile    |
++----+--------+---------+-----------+
+|  1 | tushar | mulund  |      NULL |
+|  1 | tushar | mulund  |      NULL |
+|  2 | priya  | chembur |      NULL |
+|  1 | tushar | mulund  |  99234567 |
+|  3 | priya  | chembur | 787878234 |
++----+--------+---------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> insert into n_tab (id,name,city,mobile) values(1,'tushar','mulund',99234567),(3,'priya','chembur',787878234);
+ERROR 1062 (23000): Duplicate entry '99234567' for key 'n_tab.mobile'
+mysql> insert into n_tab (id,name,city) values(1,'tushar','mulund);
+    '>
+    '> ^C
+mysql> insert into n_tab (id,name,city) values(1,'tushar','mulund');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from n_tab;
++----+--------+---------+-----------+
+| id | name   | city    | mobile    |
++----+--------+---------+-----------+
+|  1 | tushar | mulund  |      NULL |
+|  1 | tushar | mulund  |      NULL |
+|  2 | priya  | chembur |      NULL |
+|  1 | tushar | mulund  |  99234567 |
+|  3 | priya  | chembur | 787878234 |
+|  1 | tushar | mulund  |      NULL |
++----+--------+---------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> insert into n_tab (id,name,city,mobile) values(1,'tushar','mulund',222222);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from n_tab;
++----+--------+---------+-----------+
+| id | name   | city    | mobile    |
++----+--------+---------+-----------+
+|  1 | tushar | mulund  |      NULL |
+|  1 | tushar | mulund  |      NULL |
+|  2 | priya  | chembur |      NULL |
+|  1 | tushar | mulund  |  99234567 |
+|  3 | priya  | chembur | 787878234 |
+|  1 | tushar | mulund  |      NULL |
+|  1 | tushar | mulund  |    222222 |
++----+--------+---------+-----------+
+7 rows in set (0.00 sec)
+
+mysql> create table student(
+    -> id int(5)not null primary key
+    -> insert into n_tab (id,name,city) values(1,'tushar','mulund');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'insert into n_tab (id,name,city) values(1,'tushar','mulund')' at line 3
+mysql>
+mysql> create table p_tab
+    -> (
+    -> id int(5) not null primary key,
+    -> name varchar(40),
+    -> rollno int(10) unique key,
+    -> city varchar(10)
+    -> );
+Query OK, 0 rows affected, 2 warnings (0.02 sec)
+
+mysql> desc p_atb;
+ERROR 1146 (42S02): Table 'my_db.p_atb' doesn't exist
+mysql> desc p_tab;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| id     | int         | NO   | PRI | NULL    |       |
+| name   | varchar(40) | YES  |     | NULL    |       |
+| rollno | int         | YES  | UNI | NULL    |       |
+| city   | varchar(10) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into p_tab(id,name,rollno,city) values (1,'rahul',22,'delhi');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from p_tab;
++----+-------+--------+-------+
+| id | name  | rollno | city  |
++----+-------+--------+-------+
+|  1 | rahul |     22 | delhi |
++----+-------+--------+-------+
+1 row in set (0.00 sec)
+
+mysql> insert into p_tab(id,name,rollno,city) values (2,'rahul',22,'delhi');
+ERROR 1062 (23000): Duplicate entry '22' for key 'p_tab.rollno'
+mysql> insert into p_tab(id,name,rollno,city) values (1,'rahul',102,'delhi');
+ERROR 1062 (23000): Duplicate entry '1' for key 'p_tab.PRIMARY'
+mysql> insert into p_tab(id,name,rollno,city) values (1,'rahul',102,'delhi');

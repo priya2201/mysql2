@@ -1,0 +1,1180 @@
+Enter password: ************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 84
+Server version: 8.0.30 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE DATABASE my_db;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> USE my_db;
+Database changed
+mysql> CREATE TABLE my_tab
+    -> (
+    -> name varchar(30),
+    -> roll number(4),
+    -> address varchar(100)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'number(4),
+address varchar(100)
+)' at line 4
+mysql> CREATE TABLE my_tab(
+    -> name varchar(30),
+    -> roll number(4),
+    -> address varchar(100)
+    -> )
+    ->
+    ->
+    ->
+    ->
+    -> ^C
+mysql> CREATE TABLE my_tab
+    -> (
+    -> name varchar(30),
+    -> roll int(4)
+    -> );
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> DESC my_tab;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| name  | varchar(30) | YES  |     | NULL    |       |
+| roll  | int         | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SHOW DATABASES:
+    -> ^C
+mysql> ^C
+mysql> SHOW DATABASES:
+    ->
+    ->
+    ->
+    ->
+    ->
+    ->
+    ->
+    ->
+    -> SHOW DATABASES;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':
+
+
+
+
+
+
+
+
+SHOW DATABASES' at line 1
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| firstdb            |
+| information_schema |
+| learners           |
+| my_db              |
+| mysql              |
+| mysql2             |
+| nodelogin          |
+| performance_schema |
+| sql                |
+| sqlbasics          |
+| students1          |
+| testing            |
++--------------------+
+12 rows in set (0.00 sec)
+
+mysql> SHOW TABLES;
++-----------------+
+| Tables_in_my_db |
++-----------------+
+| my_tab          |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> USE MYSQL2
+Database changed
+mysql> SHOW TABLES:
+    -> ^C
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_mysql2 |
++------------------+
+| customers        |
+| customers1       |
++------------------+
+2 rows in set (0.00 sec)
+
+mysql> USE sys;
+ERROR 1049 (42000): Unknown database 'sys'
+mysql> USE my_db;
+Database changed
+mysql> USE my_tab;
+ERROR 1049 (42000): Unknown database 'my_tab'
+mysql> CREATE TABLE info
+    -> (
+    -> stu_id INT(5) NOT NULL,
+    -> name VARCHAR(50),
+    -> address TEXT,
+    -> dob DATE,
+    -> fees DEC(10,2)
+    -> );
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> DESC info;
++---------+---------------+------+-----+---------+-------+
+| Field   | Type          | Null | Key | Default | Extra |
++---------+---------------+------+-----+---------+-------+
+| stu_id  | int           | NO   |     | NULL    |       |
+| name    | varchar(50)   | YES  |     | NULL    |       |
+| address | text          | YES  |     | NULL    |       |
+| dob     | date          | YES  |     | NULL    |       |
+| fees    | decimal(10,2) | YES  |     | NULL    |       |
++---------+---------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> help contents;
+You asked for help about help category: "Contents"
+For more information, type 'help <item>', where <item> is one of the following
+categories:
+   Account Management
+   Administration
+   Components
+   Compound Statements
+   Contents
+   Data Definition
+   Data Manipulation
+   Data Types
+   Functions
+   Geographic Features
+   Help Metadata
+   Language Structure
+   Loadable Functions
+   Plugins
+   Prepared Statements
+   Replication Statements
+   Storage Engines
+   Table Maintenance
+   Transactions
+   Utility
+
+mysql> help data manipulation
+You asked for help about help category: "Data Manipulation"
+For more information, type 'help <item>', where <item> is one of the following
+topics:
+   CALL
+   DELETE
+   DO
+   DUAL
+   HANDLER
+   IMPORT TABLE
+   INSERT
+   INSERT DELAYED
+   INSERT SELECT
+   JOIN
+   LOAD DATA
+   LOAD XML
+   PARENTHESIZED QUERY EXPRESSIONS
+   REPLACE
+   SELECT
+   TABLE
+   UNION
+   UPDATE
+   VALUES STATEMENT
+
+mysql> INSERT INTO INFO (stu_id,name,address,dob,fees) VALUES(02,'priya','delhi malbar hill 32','1999/22/12',100000);
+ERROR 1292 (22007): Incorrect date value: '1999/22/12' for column 'dob' at row 1
+mysql> INSERT INTO INFO (stu_id,name,address,dob,fees) VALUES(02,'priya','delhi malbar hill 32','1999/2/12',100000);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> INSERT INTO INFO (stu_id,name,address,dob,fees) VALUES(02,'priya','delhi malbar hill 32','1999/2/12',1000000000.00);
+ERROR 1264 (22003): Out of range value for column 'fees' at row 1
+mysql> INSERT INTO INFO (stu_id,name,address,dob,fees) VALUES(02,'priya','delhi malbar hill 32','1999/2/12',10000000.00);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> INSERT INTO INFO (stu_id,name,address,dob,fees) VALUES(02,'priya','delhi malbar hill 32','1999/2/12',100000000.00);
+ERROR 1264 (22003): Out of range value for column 'fees' at row 1
+mysql> INSERT INTO INFO (stu_id,name,address,dob,fees) VALUES(02,'priya','delhi malbar hill 32','1999/2/12',100000000.000);
+ERROR 1264 (22003): Out of range value for column 'fees' at row 1
+mysql> select * from info;
++--------+-------+----------------------+------------+-------------+
+| stu_id | name  | address              | dob        | fees        |
++--------+-------+----------------------+------------+-------------+
+|      2 | priya | delhi malbar hill 32 | 1999-02-12 |   100000.00 |
+|      2 | priya | delhi malbar hill 32 | 1999-02-12 | 10000000.00 |
++--------+-------+----------------------+------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO info
+    -> VALUES(03,'vinit','mumbai taj 44','2001/2/12',12000000.01);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> VALUES(04,'vini','mumbai taj 44','2001/2/22',12000000.0);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(04,'vini','mumbai taj 44','2001/2/22',12000000.0)' at line 1
+mysql> VALUES(04,'vini','mumbai taj 44','2001/2/22',12000000.0);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(04,'vini','mumbai taj 44','2001/2/22',12000000.0)' at line 1
+mysql> INSERT INTO info
+    -> VALUES(04,'vini','mumbai taj 44','2001/2/22',12000000.0);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> select * from info;
++--------+-------+----------------------+------------+-------------+
+| stu_id | name  | address              | dob        | fees        |
++--------+-------+----------------------+------------+-------------+
+|      2 | priya | delhi malbar hill 32 | 1999-02-12 |   100000.00 |
+|      2 | priya | delhi malbar hill 32 | 1999-02-12 | 10000000.00 |
+|      3 | vinit | mumbai taj 44        | 2001-02-12 | 12000000.01 |
+|      4 | vini  | mumbai taj 44        | 2001-02-22 | 12000000.00 |
++--------+-------+----------------------+------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO info(name,address,fees,stu_id,dob) VALUES('siya','chembur mahanganga park',3456000000,09,'1999/11/23');
+ERROR 1264 (22003): Out of range value for column 'fees' at row 1
+mysql> INSERT INTO info(name,address,fees,stu_id,dob) VALUES('siya','chembur mahanganga park',34560000,09,'1999/11/23');
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> select * from info;
++--------+-------+-------------------------+------------+-------------+
+| stu_id | name  | address                 | dob        | fees        |
++--------+-------+-------------------------+------------+-------------+
+|      2 | priya | delhi malbar hill 32    | 1999-02-12 |   100000.00 |
+|      2 | priya | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |
+|      3 | vinit | mumbai taj 44           | 2001-02-12 | 12000000.01 |
+|      4 | vini  | mumbai taj 44           | 2001-02-22 | 12000000.00 |
+|      9 | siya  | chembur mahanganga park | 1999-11-23 | 34560000.00 |
++--------+-------+-------------------------+------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO info(name,address,fees,stu_id) VALUES('siya','chembur mahanganga park',34560000,09);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from info;
++--------+-------+-------------------------+------------+-------------+
+| stu_id | name  | address                 | dob        | fees        |
++--------+-------+-------------------------+------------+-------------+
+|      2 | priya | delhi malbar hill 32    | 1999-02-12 |   100000.00 |
+|      2 | priya | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |
+|      3 | vinit | mumbai taj 44           | 2001-02-12 | 12000000.01 |
+|      4 | vini  | mumbai taj 44           | 2001-02-22 | 12000000.00 |
+|      9 | siya  | chembur mahanganga park | 1999-11-23 | 34560000.00 |
+|      9 | siya  | chembur mahanganga park | NULL       | 34560000.00 |
++--------+-------+-------------------------+------------+-------------+
+6 rows in set (0.00 sec)
+
+mysql> INSERT INTO info(stu_id,dob) VALUES(09,'1999/11/23');
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> select * from info;
++--------+-------+-------------------------+------------+-------------+
+| stu_id | name  | address                 | dob        | fees        |
++--------+-------+-------------------------+------------+-------------+
+|      2 | priya | delhi malbar hill 32    | 1999-02-12 |   100000.00 |
+|      2 | priya | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |
+|      3 | vinit | mumbai taj 44           | 2001-02-12 | 12000000.01 |
+|      4 | vini  | mumbai taj 44           | 2001-02-22 | 12000000.00 |
+|      9 | siya  | chembur mahanganga park | 1999-11-23 | 34560000.00 |
+|      9 | siya  | chembur mahanganga park | NULL       | 34560000.00 |
+|      9 | NULL  | NULL                    | 1999-11-23 |        NULL |
++--------+-------+-------------------------+------------+-------------+
+7 rows in set (0.00 sec)
+
+mysql> INSERT INTO info(dob) VALUES('1999/11/23');
+ERROR 1364 (HY000): Field 'stu_id' doesn't have a default value
+mysql> INSERT INTO info(address,dob) VALUES('malbhar hill,pune','1999/11/23');
+ERROR 1364 (HY000): Field 'stu_id' doesn't have a default value
+mysql> INSERT INTO info(stu_id,address,dob) VALUES(22,'malbhar hill,pune','1999/11/23');
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> select * from info;
++--------+-------+-------------------------+------------+-------------+
+| stu_id | name  | address                 | dob        | fees        |
++--------+-------+-------------------------+------------+-------------+
+|      2 | priya | delhi malbar hill 32    | 1999-02-12 |   100000.00 |
+|      2 | priya | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |
+|      3 | vinit | mumbai taj 44           | 2001-02-12 | 12000000.01 |
+|      4 | vini  | mumbai taj 44           | 2001-02-22 | 12000000.00 |
+|      9 | siya  | chembur mahanganga park | 1999-11-23 | 34560000.00 |
+|      9 | siya  | chembur mahanganga park | NULL       | 34560000.00 |
+|      9 | NULL  | NULL                    | 1999-11-23 |        NULL |
+|     22 | NULL  | malbhar hill,pune       | 1999-11-23 |        NULL |
++--------+-------+-------------------------+------------+-------------+
+8 rows in set (0.00 sec)
+
+mysql> INSERT INTO info(stu_id,dob) VALUES(09,'1999/11/23'),
+    -> (11,'1998/12/22');
+Query OK, 2 rows affected, 2 warnings (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 2
+
+mysql> select * from info;
++--------+-------+-------------------------+------------+-------------+
+| stu_id | name  | address                 | dob        | fees        |
++--------+-------+-------------------------+------------+-------------+
+|      2 | priya | delhi malbar hill 32    | 1999-02-12 |   100000.00 |
+|      2 | priya | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |
+|      3 | vinit | mumbai taj 44           | 2001-02-12 | 12000000.01 |
+|      4 | vini  | mumbai taj 44           | 2001-02-22 | 12000000.00 |
+|      9 | siya  | chembur mahanganga park | 1999-11-23 | 34560000.00 |
+|      9 | siya  | chembur mahanganga park | NULL       | 34560000.00 |
+|      9 | NULL  | NULL                    | 1999-11-23 |        NULL |
+|     22 | NULL  | malbhar hill,pune       | 1999-11-23 |        NULL |
+|      9 | NULL  | NULL                    | 1999-11-23 |        NULL |
+|     11 | NULL  | NULL                    | 1998-12-22 |        NULL |
++--------+-------+-------------------------+------------+-------------+
+10 rows in set (0.00 sec)
+
+mysql> select name,address from info;
++-------+-------------------------+
+| name  | address                 |
++-------+-------------------------+
+| priya | delhi malbar hill 32    |
+| priya | delhi malbar hill 32    |
+| vinit | mumbai taj 44           |
+| vini  | mumbai taj 44           |
+| siya  | chembur mahanganga park |
+| siya  | chembur mahanganga park |
+| NULL  | NULL                    |
+| NULL  | malbhar hill,pune       |
+| NULL  | NULL                    |
+| NULL  | NULL                    |
++-------+-------------------------+
+10 rows in set (0.00 sec)
+
+mysql> INSERT INTO info(stu_id,address,dob) VALUES(2222,'malbhar\'s  hill,pune','1999/11/23');
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> INSERT INTO info(name,stu_id,address,dob) VALUES('tushar',21222,'malbhar''s  hill,pune','1999/11/23');
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> select * from info;
++--------+--------+-------------------------+------------+-------------+
+| stu_id | name   | address                 | dob        | fees        |
++--------+--------+-------------------------+------------+-------------+
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 |   100000.00 |
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |
+|      3 | vinit  | mumbai taj 44           | 2001-02-12 | 12000000.01 |
+|      4 | vini   | mumbai taj 44           | 2001-02-22 | 12000000.00 |
+|      9 | siya   | chembur mahanganga park | 1999-11-23 | 34560000.00 |
+|      9 | siya   | chembur mahanganga park | NULL       | 34560000.00 |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |
+|     22 | NULL   | malbhar hill,pune       | 1999-11-23 |        NULL |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |
+|     11 | NULL   | NULL                    | 1998-12-22 |        NULL |
+|   2222 | NULL   | malbhar's  hill,pune    | 1999-11-23 |        NULL |
+|  21222 | tushar | malbhar's  hill,pune    | 1999-11-23 |        NULL |
++--------+--------+-------------------------+------------+-------------+
+12 rows in set (0.00 sec)
+
+mysql> select name,address,fees from info limit 4;
++-------+----------------------+-------------+
+| name  | address              | fees        |
++-------+----------------------+-------------+
+| priya | delhi malbar hill 32 |   100000.00 |
+| priya | delhi malbar hill 32 | 10000000.00 |
+| vinit | mumbai taj 44        | 12000000.01 |
+| vini  | mumbai taj 44        | 12000000.00 |
++-------+----------------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> select name,address,fees from info limit 1,5;
++-------+-------------------------+-------------+
+| name  | address                 | fees        |
++-------+-------------------------+-------------+
+| priya | delhi malbar hill 32    | 10000000.00 |
+| vinit | mumbai taj 44           | 12000000.01 |
+| vini  | mumbai taj 44           | 12000000.00 |
+| siya  | chembur mahanganga park | 34560000.00 |
+| siya  | chembur mahanganga park | 34560000.00 |
++-------+-------------------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from info where name='priya';
++--------+-------+----------------------+------------+-------------+
+| stu_id | name  | address              | dob        | fees        |
++--------+-------+----------------------+------------+-------------+
+|      2 | priya | delhi malbar hill 32 | 1999-02-12 |   100000.00 |
+|      2 | priya | delhi malbar hill 32 | 1999-02-12 | 10000000.00 |
++--------+-------+----------------------+------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> select address from info where address <> 'chembur mahaganga park';
++-------------------------+
+| address                 |
++-------------------------+
+| delhi malbar hill 32    |
+| delhi malbar hill 32    |
+| mumbai taj 44           |
+| mumbai taj 44           |
+| chembur mahanganga park |
+| chembur mahanganga park |
+| malbhar hill,pune       |
+| malbhar's  hill,pune    |
+| malbhar's  hill,pune    |
++-------------------------+
+9 rows in set (0.00 sec)
+
+mysql> select address from info where address != 'chembur mahaganga park';
++-------------------------+
+| address                 |
++-------------------------+
+| delhi malbar hill 32    |
+| delhi malbar hill 32    |
+| mumbai taj 44           |
+| mumbai taj 44           |
+| chembur mahanganga park |
+| chembur mahanganga park |
+| malbhar hill,pune       |
+| malbhar's  hill,pune    |
+| malbhar's  hill,pune    |
++-------------------------+
+9 rows in set (0.00 sec)
+
+mysql> select address from info WHERE address != 'chembur mahaganga park';
++-------------------------+
+| address                 |
++-------------------------+
+| delhi malbar hill 32    |
+| delhi malbar hill 32    |
+| mumbai taj 44           |
+| mumbai taj 44           |
+| chembur mahanganga park |
+| chembur mahanganga park |
+| malbhar hill,pune       |
+| malbhar's  hill,pune    |
+| malbhar's  hill,pune    |
++-------------------------+
+9 rows in set (0.00 sec)
+
+mysql> select address from info WHERE address != 'chembur mahanganga park';
++----------------------+
+| address              |
++----------------------+
+| delhi malbar hill 32 |
+| delhi malbar hill 32 |
+| mumbai taj 44        |
+| mumbai taj 44        |
+| malbhar hill,pune    |
+| malbhar's  hill,pune |
+| malbhar's  hill,pune |
++----------------------+
+7 rows in set (0.00 sec)
+
+mysql> clear
+mysql> select * from info;
++--------+--------+-------------------------+------------+-------------+
+| stu_id | name   | address                 | dob        | fees        |
++--------+--------+-------------------------+------------+-------------+
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 |   100000.00 |
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |
+|      3 | vinit  | mumbai taj 44           | 2001-02-12 | 12000000.01 |
+|      4 | vini   | mumbai taj 44           | 2001-02-22 | 12000000.00 |
+|      9 | siya   | chembur mahanganga park | 1999-11-23 | 34560000.00 |
+|      9 | siya   | chembur mahanganga park | NULL       | 34560000.00 |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |
+|     22 | NULL   | malbhar hill,pune       | 1999-11-23 |        NULL |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |
+|     11 | NULL   | NULL                    | 1998-12-22 |        NULL |
+|   2222 | NULL   | malbhar's  hill,pune    | 1999-11-23 |        NULL |
+|  21222 | tushar | malbhar's  hill,pune    | 1999-11-23 |        NULL |
++--------+--------+-------------------------+------------+-------------+
+12 rows in set (0.00 sec)
+
+mysql> select * from info where stu_id>22;
++--------+--------+----------------------+------------+------+
+| stu_id | name   | address              | dob        | fees |
++--------+--------+----------------------+------------+------+
+|   2222 | NULL   | malbhar's  hill,pune | 1999-11-23 | NULL |
+|  21222 | tushar | malbhar's  hill,pune | 1999-11-23 | NULL |
++--------+--------+----------------------+------------+------+
+2 rows in set (0.00 sec)
+
+mysql> select name from info where name > 's';
++--------+
+| name   |
++--------+
+| vinit  |
+| vini   |
+| siya   |
+| siya   |
+| tushar |
++--------+
+5 rows in set (0.00 sec)
+
+
+mysql> select name from info where name < 's';
++-------+
+| name  |
++-------+
+| priya |
+| priya |
++-------+
+2 rows in set (0.00 sec)
+
+mysql> select name from info where name <= 's';
++-------+
+| name  |
++-------+
+| priya |
+| priya |
++-------+
+2 rows in set (0.00 sec)
+Enter password: ************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 88
+Server version: 8.0.30 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use my_db;
+Database changed
+mysql> select * from info;
++--------+--------+-------------------------+------------+-------------+--------+
+| stu_id | name   | address                 | dob        | fees        | salary |
++--------+--------+-------------------------+------------+-------------+--------+
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 |   100000.00 |   NULL |
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |   NULL |
+|      3 | vinit  | mumbai taj 44           | 2001-02-12 | 12000000.01 |   NULL |
+|      4 | vini   | mumbai taj 44           | 2001-02-22 | 12000000.00 |   NULL |
+|      9 | siya   | chembur mahanganga park | 1999-11-23 | 34560000.00 |   NULL |
+|      9 | siya   | chembur mahanganga park | NULL       | 34560000.00 |   NULL |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |   NULL |
+|     22 | NULL   | malbhar hill,pune       | 1999-11-23 |        NULL |   NULL |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |   NULL |
+|     11 | NULL   | NULL                    | 1998-12-22 |        NULL |   NULL |
+|   2222 | NULL   | malbhar's  hill,pune    | 1999-11-23 |        NULL |   NULL |
+|  21222 | tushar | malbhar's  hill,pune    | 1999-11-23 |        NULL |   NULL |
+|    123 | NULL   | NULL                    | NULL       |        NULL | 200000 |
++--------+--------+-------------------------+------------+-------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select * from info where name like 'p%';
++--------+-------+----------------------+------------+-------------+--------+
+| stu_id | name  | address              | dob        | fees        | salary |
++--------+-------+----------------------+------------+-------------+--------+
+|      2 | priya | delhi malbar hill 32 | 1999-02-12 |   100000.00 |   NULL |
+|      2 | priya | delhi malbar hill 32 | 1999-02-12 | 10000000.00 |   NULL |
++--------+-------+----------------------+------------+-------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from info where name like '%it';
++--------+-------+---------------+------------+-------------+--------+
+| stu_id | name  | address       | dob        | fees        | salary |
++--------+-------+---------------+------------+-------------+--------+
+|      3 | vinit | mumbai taj 44 | 2001-02-12 | 12000000.01 |   NULL |
++--------+-------+---------------+------------+-------------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from info where name like '%sha%';
++--------+--------+----------------------+------------+------+--------+
+| stu_id | name   | address              | dob        | fees | salary |
++--------+--------+----------------------+------------+------+--------+
+|  21222 | tushar | malbhar's  hill,pune | 1999-11-23 | NULL |   NULL |
++--------+--------+----------------------+------------+------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from info where name like 'tusha_';
++--------+--------+----------------------+------------+------+--------+
+| stu_id | name   | address              | dob        | fees | salary |
++--------+--------+----------------------+------------+------+--------+
+|  21222 | tushar | malbhar's  hill,pune | 1999-11-23 | NULL |   NULL |
++--------+--------+----------------------+------------+------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from info where address like 'mall_ha_ hi__';
+Empty set (0.00 sec)
+
+mysql> select * from info where address like 'malb_ha_ hi__';
+Empty set (0.00 sec)
+
+mysql> select * from info where address like 'malb__ hi__';
+Empty set (0.00 sec)
+
+mysql> select * from info where address like 'del_i malb__ hi__ 3_';
++--------+-------+----------------------+------------+-------------+--------+
+| stu_id | name  | address              | dob        | fees        | salary |
++--------+-------+----------------------+------------+-------------+--------+
+|      2 | priya | delhi malbar hill 32 | 1999-02-12 |   100000.00 |   NULL |
+|      2 | priya | delhi malbar hill 32 | 1999-02-12 | 10000000.00 |   NULL |
++--------+-------+----------------------+------------+-------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from info where name like '__ni';
++--------+------+---------------+------------+-------------+--------+
+| stu_id | name | address       | dob        | fees        | salary |
++--------+------+---------------+------------+-------------+--------+
+|      4 | vini | mumbai taj 44 | 2001-02-22 | 12000000.00 |   NULL |
++--------+------+---------------+------------+-------------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from info where name like '%ni';
++--------+------+---------------+------------+-------------+--------+
+| stu_id | name | address       | dob        | fees        | salary |
++--------+------+---------------+------------+-------------+--------+
+|      4 | vini | mumbai taj 44 | 2001-02-22 | 12000000.00 |   NULL |
++--------+------+---------------+------------+-------------+--------+
+1 row in set (0.00 sec)
+
+mysql> select name from info where name like '%ni' and address like '_mumbai';
+Empty set (0.00 sec)
+
+mysql> select name from info where name like '%ni' and address like '_umbai';
+Empty set (0.00 sec)
+
+mysql> select name from info where name like '%ni' and address like '_umbai ta_ __';
++------+
+| name |
++------+
+| vini |
++------+
+1 row in set (0.00 sec)
+
+mysql> select fees,dob from info where name like '%i' and(salary in null or dob between 1999/1/12 and 2000/1/23);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'null or dob between 1999/1/12 and 2000/1/23)' at line 1
+mysql> select fees,dob from info where name like '%i' and(salary is null or dob between 1999/1/12 and 2000/1/23);
++-------------+------------+
+| fees        | dob        |
++-------------+------------+
+| 12000000.00 | 2001-02-22 |
++-------------+------------+
+1 row in set, 2 warnings (0.00 sec)
+
+mysql> select * from info;
++--------+--------+-------------------------+------------+-------------+--------+
+| stu_id | name   | address                 | dob        | fees        | salary |
++--------+--------+-------------------------+------------+-------------+--------+
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 |   100000.00 |   NULL |
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |   NULL |
+|      3 | vinit  | mumbai taj 44           | 2001-02-12 | 12000000.01 |   NULL |
+|      4 | vini   | mumbai taj 44           | 2001-02-22 | 12000000.00 |   NULL |
+|      9 | siya   | chembur mahanganga park | 1999-11-23 | 34560000.00 |   NULL |
+|      9 | siya   | chembur mahanganga park | NULL       | 34560000.00 |   NULL |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |   NULL |
+|     22 | NULL   | malbhar hill,pune       | 1999-11-23 |        NULL |   NULL |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |   NULL |
+|     11 | NULL   | NULL                    | 1998-12-22 |        NULL |   NULL |
+|   2222 | NULL   | malbhar's  hill,pune    | 1999-11-23 |        NULL |   NULL |
+|  21222 | tushar | malbhar's  hill,pune    | 1999-11-23 |        NULL |   NULL |
+|    123 | NULL   | NULL                    | NULL       |        NULL | 200000 |
++--------+--------+-------------------------+------------+-------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select fees,dob from info where name like '%i%' and(salary is null or dob between 1999/1/12 and 2000/1/23);
++-------------+------------+
+| fees        | dob        |
++-------------+------------+
+|   100000.00 | 1999-02-12 |
+| 10000000.00 | 1999-02-12 |
+| 12000000.01 | 2001-02-12 |
+| 12000000.00 | 2001-02-22 |
+| 34560000.00 | 1999-11-23 |
+| 34560000.00 | NULL       |
++-------------+------------+
+6 rows in set, 2 warnings (0.00 sec)
+
+mysql> select fees,dob from info where name not like '%i%' and(salary is null or dob between 1999/1/12 and 2000/1/23);
++------+------------+
+| fees | dob        |
++------+------------+
+| NULL | 1999-11-23 |
++------+------------+
+1 row in set, 2 warnings (0.00 sec)
+
+mysql> selct * from info order by name desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selct * from info order by name desc' at line 1
+mysql> select * from info order by name desc;
++--------+--------+-------------------------+------------+-------------+--------+
+| stu_id | name   | address                 | dob        | fees        | salary |
++--------+--------+-------------------------+------------+-------------+--------+
+|      3 | vinit  | mumbai taj 44           | 2001-02-12 | 12000000.01 |   NULL |
+|      4 | vini   | mumbai taj 44           | 2001-02-22 | 12000000.00 |   NULL |
+|  21222 | tushar | malbhar's  hill,pune    | 1999-11-23 |        NULL |   NULL |
+|      9 | siya   | chembur mahanganga park | 1999-11-23 | 34560000.00 |   NULL |
+|      9 | siya   | chembur mahanganga park | NULL       | 34560000.00 |   NULL |
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 |   100000.00 |   NULL |
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |   NULL |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |   NULL |
+|     22 | NULL   | malbhar hill,pune       | 1999-11-23 |        NULL |   NULL |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |   NULL |
+|     11 | NULL   | NULL                    | 1998-12-22 |        NULL |   NULL |
+|   2222 | NULL   | malbhar's  hill,pune    | 1999-11-23 |        NULL |   NULL |
+|    123 | NULL   | NULL                    | NULL       |        NULL | 200000 |
++--------+--------+-------------------------+------------+-------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select * from info order by address asc;
++--------+--------+-------------------------+------------+-------------+--------+
+| stu_id | name   | address                 | dob        | fees        | salary |
++--------+--------+-------------------------+------------+-------------+--------+
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |   NULL |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |   NULL |
+|     11 | NULL   | NULL                    | 1998-12-22 |        NULL |   NULL |
+|    123 | NULL   | NULL                    | NULL       |        NULL | 200000 |
+|      9 | siya   | chembur mahanganga park | 1999-11-23 | 34560000.00 |   NULL |
+|      9 | siya   | chembur mahanganga park | NULL       | 34560000.00 |   NULL |
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 |   100000.00 |   NULL |
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |   NULL |
+|     22 | NULL   | malbhar hill,pune       | 1999-11-23 |        NULL |   NULL |
+|   2222 | NULL   | malbhar's  hill,pune    | 1999-11-23 |        NULL |   NULL |
+|  21222 | tushar | malbhar's  hill,pune    | 1999-11-23 |        NULL |   NULL |
+|      3 | vinit  | mumbai taj 44           | 2001-02-12 | 12000000.01 |   NULL |
+|      4 | vini   | mumbai taj 44           | 2001-02-22 | 12000000.00 |   NULL |
++--------+--------+-------------------------+------------+-------------+--------+
+13 rows in set (0.00 sec)
+
+mysql>
+
+mysql> select name from info where name >= 's';
++--------+
+| name   |
++--------+
+| vinit  |
+| vini   |
+| siya   |
+| siya   |
+| tushar |
++--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from innfo
+    ->
+    ->
+    ->
+    -> ^C
+mysql>
+mysql> select * from info
+    ->
+    -> ^C
+mysql> select * from info;
++--------+--------+-------------------------+------------+-------------+
+| stu_id | name   | address                 | dob        | fees        |
++--------+--------+-------------------------+------------+-------------+
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 |   100000.00 |
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |
+|      3 | vinit  | mumbai taj 44           | 2001-02-12 | 12000000.01 |
+|      4 | vini   | mumbai taj 44           | 2001-02-22 | 12000000.00 |
+|      9 | siya   | chembur mahanganga park | 1999-11-23 | 34560000.00 |
+|      9 | siya   | chembur mahanganga park | NULL       | 34560000.00 |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |
+|     22 | NULL   | malbhar hill,pune       | 1999-11-23 |        NULL |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |
+|     11 | NULL   | NULL                    | 1998-12-22 |        NULL |
+|   2222 | NULL   | malbhar's  hill,pune    | 1999-11-23 |        NULL |
+|  21222 | tushar | malbhar's  hill,pune    | 1999-11-23 |        NULL |
++--------+--------+-------------------------+------------+-------------+
+12 rows in set (0.00 sec)
+
+mysql> select * from info where name IS NULL AND address IS NULL;
++--------+------+---------+------------+------+
+| stu_id | name | address | dob        | fees |
++--------+------+---------+------------+------+
+|      9 | NULL | NULL    | 1999-11-23 | NULL |
+|      9 | NULL | NULL    | 1999-11-23 | NULL |
+|     11 | NULL | NULL    | 1998-12-22 | NULL |
++--------+------+---------+------------+------+
+3 rows in set (0.00 sec)
+
+mysql> select * from info where name IS NULL;
++--------+------+----------------------+------------+------+
+| stu_id | name | address              | dob        | fees |
++--------+------+----------------------+------------+------+
+|      9 | NULL | NULL                 | 1999-11-23 | NULL |
+|     22 | NULL | malbhar hill,pune    | 1999-11-23 | NULL |
+|      9 | NULL | NULL                 | 1999-11-23 | NULL |
+|     11 | NULL | NULL                 | 1998-12-22 | NULL |
+|   2222 | NULL | malbhar's  hill,pune | 1999-11-23 | NULL |
++--------+------+----------------------+------------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from info where name IS NOT NULL;
++--------+--------+-------------------------+------------+-------------+
+| stu_id | name   | address                 | dob        | fees        |
++--------+--------+-------------------------+------------+-------------+
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 |   100000.00 |
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |
+|      3 | vinit  | mumbai taj 44           | 2001-02-12 | 12000000.01 |
+|      4 | vini   | mumbai taj 44           | 2001-02-22 | 12000000.00 |
+|      9 | siya   | chembur mahanganga park | 1999-11-23 | 34560000.00 |
+|      9 | siya   | chembur mahanganga park | NULL       | 34560000.00 |
+|  21222 | tushar | malbhar's  hill,pune    | 1999-11-23 |        NULL |
++--------+--------+-------------------------+------------+-------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from info where name IS NOT NULL;
++--------+--------+-------------------------+------------+-------------+
+| stu_id | name   | address                 | dob        | fees        |
++--------+--------+-------------------------+------------+-------------+
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 |   100000.00 |
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |
+|      3 | vinit  | mumbai taj 44           | 2001-02-12 | 12000000.01 |
+|      4 | vini   | mumbai taj 44           | 2001-02-22 | 12000000.00 |
+|      9 | siya   | chembur mahanganga park | 1999-11-23 | 34560000.00 |
+|      9 | siya   | chembur mahanganga park | NULL       | 34560000.00 |
+|  21222 | tushar | malbhar's  hill,pune    | 1999-11-23 |        NULL |
++--------+--------+-------------------------+------------+-------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from info;
++--------+--------+-------------------------+------------+-------------+
+| stu_id | name   | address                 | dob        | fees        |
++--------+--------+-------------------------+------------+-------------+
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 |   100000.00 |
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |
+|      3 | vinit  | mumbai taj 44           | 2001-02-12 | 12000000.01 |
+|      4 | vini   | mumbai taj 44           | 2001-02-22 | 12000000.00 |
+|      9 | siya   | chembur mahanganga park | 1999-11-23 | 34560000.00 |
+|      9 | siya   | chembur mahanganga park | NULL       | 34560000.00 |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |
+|     22 | NULL   | malbhar hill,pune       | 1999-11-23 |        NULL |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |
+|     11 | NULL   | NULL                    | 1998-12-22 |        NULL |
+|   2222 | NULL   | malbhar's  hill,pune    | 1999-11-23 |        NULL |
+|  21222 | tushar | malbhar's  hill,pune    | 1999-11-23 |        NULL |
++--------+--------+-------------------------+------------+-------------+
+12 rows in set (0.00 sec)
+
+mysql> select * from info where stu_id=2 AND name='priya';
++--------+-------+----------------------+------------+-------------+
+| stu_id | name  | address              | dob        | fees        |
++--------+-------+----------------------+------------+-------------+
+|      2 | priya | delhi malbar hill 32 | 1999-02-12 |   100000.00 |
+|      2 | priya | delhi malbar hill 32 | 1999-02-12 | 10000000.00 |
++--------+-------+----------------------+------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from info where stu_id=3 AND name='priya';
+Empty set (0.00 sec)
+
+mysql> select * from info where stu_id=3 OR name='priya';
++--------+-------+----------------------+------------+-------------+
+| stu_id | name  | address              | dob        | fees        |
++--------+-------+----------------------+------------+-------------+
+|      2 | priya | delhi malbar hill 32 | 1999-02-12 |   100000.00 |
+|      2 | priya | delhi malbar hill 32 | 1999-02-12 | 10000000.00 |
+|      3 | vinit | mumbai taj 44        | 2001-02-12 | 12000000.01 |
++--------+-------+----------------------+------------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from info where dob='1999/11/23 AND  name='priya';
+    '>
+    '>
+    '>
+    '> ^C
+mysql> select * from info where dob='1999/11/23' AND  name='priya';
+Empty set, 1 warning (0.00 sec)
+
+mysql> select * from info where dob='1999/11/23' OR  name='priya';
++--------+--------+-------------------------+------------+-------------+
+| stu_id | name   | address                 | dob        | fees        |
++--------+--------+-------------------------+------------+-------------+
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 |   100000.00 |
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |
+|      9 | siya   | chembur mahanganga park | 1999-11-23 | 34560000.00 |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |
+|     22 | NULL   | malbhar hill,pune       | 1999-11-23 |        NULL |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |
+|   2222 | NULL   | malbhar's  hill,pune    | 1999-11-23 |        NULL |
+|  21222 | tushar | malbhar's  hill,pune    | 1999-11-23 |        NULL |
++--------+--------+-------------------------+------------+-------------+
+8 rows in set, 1 warning (0.00 sec)
+
+mysql> select * from info where name='siya' AND (stu_id=9 OR dob IS NULL);
++--------+------+-------------------------+------------+-------------+
+| stu_id | name | address                 | dob        | fees        |
++--------+------+-------------------------+------------+-------------+
+|      9 | siya | chembur mahanganga park | 1999-11-23 | 34560000.00 |
+|      9 | siya | chembur mahanganga park | NULL       | 34560000.00 |
++--------+------+-------------------------+------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from info where name='priya' AND (stu_id=9 OR dob IS NULL);
+Empty set (0.00 sec)
+
+mysql> select * from info where name='priya' OR (stu_id=9 AND dob IS NULL);
++--------+-------+-------------------------+------------+-------------+
+| stu_id | name  | address                 | dob        | fees        |
++--------+-------+-------------------------+------------+-------------+
+|      2 | priya | delhi malbar hill 32    | 1999-02-12 |   100000.00 |
+|      2 | priya | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |
+|      9 | siya  | chembur mahanganga park | NULL       | 34560000.00 |
++--------+-------+-------------------------+------------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from info where name in('priya','siya');
++--------+-------+-------------------------+------------+-------------+
+| stu_id | name  | address                 | dob        | fees        |
++--------+-------+-------------------------+------------+-------------+
+|      2 | priya | delhi malbar hill 32    | 1999-02-12 |   100000.00 |
+|      2 | priya | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |
+|      9 | siya  | chembur mahanganga park | 1999-11-23 | 34560000.00 |
+|      9 | siya  | chembur mahanganga park | NULL       | 34560000.00 |
++--------+-------+-------------------------+------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from info where address in('chembur mahanganga park);
+    '>
+    '>
+    '>
+    '> ^C
+mysql> select * from info where address in('chembur mahanganga park');
++--------+------+-------------------------+------------+-------------+
+| stu_id | name | address                 | dob        | fees        |
++--------+------+-------------------------+------------+-------------+
+|      9 | siya | chembur mahanganga park | 1999-11-23 | 34560000.00 |
+|      9 | siya | chembur mahanganga park | NULL       | 34560000.00 |
++--------+------+-------------------------+------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from info where address not in('chembur mahanganga park');
++--------+--------+----------------------+------------+-------------+
+| stu_id | name   | address              | dob        | fees        |
++--------+--------+----------------------+------------+-------------+
+|      2 | priya  | delhi malbar hill 32 | 1999-02-12 |   100000.00 |
+|      2 | priya  | delhi malbar hill 32 | 1999-02-12 | 10000000.00 |
+|      3 | vinit  | mumbai taj 44        | 2001-02-12 | 12000000.01 |
+|      4 | vini   | mumbai taj 44        | 2001-02-22 | 12000000.00 |
+|     22 | NULL   | malbhar hill,pune    | 1999-11-23 |        NULL |
+|   2222 | NULL   | malbhar's  hill,pune | 1999-11-23 |        NULL |
+|  21222 | tushar | malbhar's  hill,pune | 1999-11-23 |        NULL |
++--------+--------+----------------------+------------+-------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from info;
++--------+--------+-------------------------+------------+-------------+
+| stu_id | name   | address                 | dob        | fees        |
++--------+--------+-------------------------+------------+-------------+
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 |   100000.00 |
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |
+|      3 | vinit  | mumbai taj 44           | 2001-02-12 | 12000000.01 |
+|      4 | vini   | mumbai taj 44           | 2001-02-22 | 12000000.00 |
+|      9 | siya   | chembur mahanganga park | 1999-11-23 | 34560000.00 |
+|      9 | siya   | chembur mahanganga park | NULL       | 34560000.00 |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |
+|     22 | NULL   | malbhar hill,pune       | 1999-11-23 |        NULL |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |
+|     11 | NULL   | NULL                    | 1998-12-22 |        NULL |
+|   2222 | NULL   | malbhar's  hill,pune    | 1999-11-23 |        NULL |
+|  21222 | tushar | malbhar's  hill,pune    | 1999-11-23 |        NULL |
++--------+--------+-------------------------+------------+-------------+
+12 rows in set (0.00 sec)
+
+mysql> select * from info where stu_id BETWEEN 2 AND 9;
++--------+-------+-------------------------+------------+-------------+
+| stu_id | name  | address                 | dob        | fees        |
++--------+-------+-------------------------+------------+-------------+
+|      2 | priya | delhi malbar hill 32    | 1999-02-12 |   100000.00 |
+|      2 | priya | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |
+|      3 | vinit | mumbai taj 44           | 2001-02-12 | 12000000.01 |
+|      4 | vini  | mumbai taj 44           | 2001-02-22 | 12000000.00 |
+|      9 | siya  | chembur mahanganga park | 1999-11-23 | 34560000.00 |
+|      9 | siya  | chembur mahanganga park | NULL       | 34560000.00 |
+|      9 | NULL  | NULL                    | 1999-11-23 |        NULL |
+|      9 | NULL  | NULL                    | 1999-11-23 |        NULL |
++--------+-------+-------------------------+------------+-------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from info where name BETWEEN 'k' AND 's';
++--------+-------+----------------------+------------+-------------+
+| stu_id | name  | address              | dob        | fees        |
++--------+-------+----------------------+------------+-------------+
+|      2 | priya | delhi malbar hill 32 | 1999-02-12 |   100000.00 |
+|      2 | priya | delhi malbar hill 32 | 1999-02-12 | 10000000.00 |
++--------+-------+----------------------+------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from info where name BETWEEN 'p' AND 's';
++--------+-------+----------------------+------------+-------------+
+| stu_id | name  | address              | dob        | fees        |
++--------+-------+----------------------+------------+-------------+
+|      2 | priya | delhi malbar hill 32 | 1999-02-12 |   100000.00 |
+|      2 | priya | delhi malbar hill 32 | 1999-02-12 | 10000000.00 |
++--------+-------+----------------------+------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from info where name BETWEEN 'p' AND 'v';
++--------+--------+-------------------------+------------+-------------+
+| stu_id | name   | address                 | dob        | fees        |
++--------+--------+-------------------------+------------+-------------+
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 |   100000.00 |
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |
+|      9 | siya   | chembur mahanganga park | 1999-11-23 | 34560000.00 |
+|      9 | siya   | chembur mahanganga park | NULL       | 34560000.00 |
+|  21222 | tushar | malbhar's  hill,pune    | 1999-11-23 |        NULL |
++--------+--------+-------------------------+------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from info where dob BETWEEN '1992-01-02' AND '1999-11-23';
++--------+--------+-------------------------+------------+-------------+
+| stu_id | name   | address                 | dob        | fees        |
++--------+--------+-------------------------+------------+-------------+
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 |   100000.00 |
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |
+|      9 | siya   | chembur mahanganga park | 1999-11-23 | 34560000.00 |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |
+|     22 | NULL   | malbhar hill,pune       | 1999-11-23 |        NULL |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |
+|     11 | NULL   | NULL                    | 1998-12-22 |        NULL |
+|   2222 | NULL   | malbhar's  hill,pune    | 1999-11-23 |        NULL |
+|  21222 | tushar | malbhar's  hill,pune    | 1999-11-23 |        NULL |
++--------+--------+-------------------------+------------+-------------+
+9 rows in set (0.00 sec)
+
+mysql> select * from info where stu_id  NOT BETWEEN 9 ANd 22;
++--------+--------+----------------------+------------+-------------+
+| stu_id | name   | address              | dob        | fees        |
++--------+--------+----------------------+------------+-------------+
+|      2 | priya  | delhi malbar hill 32 | 1999-02-12 |   100000.00 |
+|      2 | priya  | delhi malbar hill 32 | 1999-02-12 | 10000000.00 |
+|      3 | vinit  | mumbai taj 44        | 2001-02-12 | 12000000.01 |
+|      4 | vini   | mumbai taj 44        | 2001-02-22 | 12000000.00 |
+|   2222 | NULL   | malbhar's  hill,pune | 1999-11-23 |        NULL |
+|  21222 | tushar | malbhar's  hill,pune | 1999-11-23 |        NULL |
++--------+--------+----------------------+------------+-------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from info where address  NOT BETWEEN 'd' ANd 'm';
++--------+--------+-------------------------+------------+-------------+
+| stu_id | name   | address                 | dob        | fees        |
++--------+--------+-------------------------+------------+-------------+
+|      3 | vinit  | mumbai taj 44           | 2001-02-12 | 12000000.01 |
+|      4 | vini   | mumbai taj 44           | 2001-02-22 | 12000000.00 |
+|      9 | siya   | chembur mahanganga park | 1999-11-23 | 34560000.00 |
+|      9 | siya   | chembur mahanganga park | NULL       | 34560000.00 |
+|     22 | NULL   | malbhar hill,pune       | 1999-11-23 |        NULL |
+|   2222 | NULL   | malbhar's  hill,pune    | 1999-11-23 |        NULL |
+|  21222 | tushar | malbhar's  hill,pune    | 1999-11-23 |        NULL |
++--------+--------+-------------------------+------------+-------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from info where dob NOT  BETWEEN '1992-01-02' AND '1999-11-23';
++--------+-------+---------------+------------+-------------+
+| stu_id | name  | address       | dob        | fees        |
++--------+-------+---------------+------------+-------------+
+|      3 | vinit | mumbai taj 44 | 2001-02-12 | 12000000.01 |
+|      4 | vini  | mumbai taj 44 | 2001-02-22 | 12000000.00 |
++--------+-------+---------------+------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> alter table info add column salary int(20);
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> select * from info;
++--------+--------+-------------------------+------------+-------------+--------+
+| stu_id | name   | address                 | dob        | fees        | salary |
++--------+--------+-------------------------+------------+-------------+--------+
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 |   100000.00 |   NULL |
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |   NULL |
+|      3 | vinit  | mumbai taj 44           | 2001-02-12 | 12000000.01 |   NULL |
+|      4 | vini   | mumbai taj 44           | 2001-02-22 | 12000000.00 |   NULL |
+|      9 | siya   | chembur mahanganga park | 1999-11-23 | 34560000.00 |   NULL |
+|      9 | siya   | chembur mahanganga park | NULL       | 34560000.00 |   NULL |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |   NULL |
+|     22 | NULL   | malbhar hill,pune       | 1999-11-23 |        NULL |   NULL |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |   NULL |
+|     11 | NULL   | NULL                    | 1998-12-22 |        NULL |   NULL |
+|   2222 | NULL   | malbhar's  hill,pune    | 1999-11-23 |        NULL |   NULL |
+|  21222 | tushar | malbhar's  hill,pune    | 1999-11-23 |        NULL |   NULL |
++--------+--------+-------------------------+------------+-------------+--------+
+12 rows in set (0.00 sec)
+
+mysql> insert into info (salary) values(200000);
+ERROR 1364 (HY000): Field 'stu_id' doesn't have a default value
+mysql> insert into info (stu_id,salary) values(123,200000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from info;
++--------+--------+-------------------------+------------+-------------+--------+
+| stu_id | name   | address                 | dob        | fees        | salary |
++--------+--------+-------------------------+------------+-------------+--------+
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 |   100000.00 |   NULL |
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |   NULL |
+|      3 | vinit  | mumbai taj 44           | 2001-02-12 | 12000000.01 |   NULL |
+|      4 | vini   | mumbai taj 44           | 2001-02-22 | 12000000.00 |   NULL |
+|      9 | siya   | chembur mahanganga park | 1999-11-23 | 34560000.00 |   NULL |
+|      9 | siya   | chembur mahanganga park | NULL       | 34560000.00 |   NULL |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |   NULL |
+|     22 | NULL   | malbhar hill,pune       | 1999-11-23 |        NULL |   NULL |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |   NULL |
+|     11 | NULL   | NULL                    | 1998-12-22 |        NULL |   NULL |
+|   2222 | NULL   | malbhar's  hill,pune    | 1999-11-23 |        NULL |   NULL |
+|  21222 | tushar | malbhar's  hill,pune    | 1999-11-23 |        NULL |   NULL |
+|    123 | NULL   | NULL                    | NULL       |        NULL | 200000 |
++--------+--------+-------------------------+------------+-------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select * from info where (stu_id between 2 and 123)
+    -> AND name in('priya','vini');
++--------+-------+----------------------+------------+-------------+--------+
+| stu_id | name  | address              | dob        | fees        | salary |
++--------+-------+----------------------+------------+-------------+--------+
+|      2 | priya | delhi malbar hill 32 | 1999-02-12 |   100000.00 |   NULL |
+|      2 | priya | delhi malbar hill 32 | 1999-02-12 | 10000000.00 |   NULL |
+|      4 | vini  | mumbai taj 44        | 2001-02-22 | 12000000.00 |   NULL |
++--------+-------+----------------------+------------+-------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from info where (stu_id between 2 and 123)
+    -> OR name in('priya','vini');
++--------+-------+-------------------------+------------+-------------+--------+
+| stu_id | name  | address                 | dob        | fees        | salary |
++--------+-------+-------------------------+------------+-------------+--------+
+|      2 | priya | delhi malbar hill 32    | 1999-02-12 |   100000.00 |   NULL |
+|      2 | priya | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |   NULL |
+|      3 | vinit | mumbai taj 44           | 2001-02-12 | 12000000.01 |   NULL |
+|      4 | vini  | mumbai taj 44           | 2001-02-22 | 12000000.00 |   NULL |
+|      9 | siya  | chembur mahanganga park | 1999-11-23 | 34560000.00 |   NULL |
+|      9 | siya  | chembur mahanganga park | NULL       | 34560000.00 |   NULL |
+|      9 | NULL  | NULL                    | 1999-11-23 |        NULL |   NULL |
+|     22 | NULL  | malbhar hill,pune       | 1999-11-23 |        NULL |   NULL |
+|      9 | NULL  | NULL                    | 1999-11-23 |        NULL |   NULL |
+|     11 | NULL  | NULL                    | 1998-12-22 |        NULL |   NULL |
+|    123 | NULL  | NULL                    | NULL       |        NULL | 200000 |
++--------+-------+-------------------------+------------+-------------+--------+
+11 rows in set (0.00 sec)
+
+mysql> select * from info where (stu_id between 2 and 123)
+    -> AND name  not in('priya','vini');
++--------+-------+-------------------------+------------+-------------+--------+
+| stu_id | name  | address                 | dob        | fees        | salary |
++--------+-------+-------------------------+------------+-------------+--------+
+|      3 | vinit | mumbai taj 44           | 2001-02-12 | 12000000.01 |   NULL |
+|      9 | siya  | chembur mahanganga park | 1999-11-23 | 34560000.00 |   NULL |
+|      9 | siya  | chembur mahanganga park | NULL       | 34560000.00 |   NULL |
++--------+-------+-------------------------+------------+-------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from info where (stu_id between 2 and 123)
+    -> OR name not in('priya','vini');
++--------+--------+-------------------------+------------+-------------+--------+
+| stu_id | name   | address                 | dob        | fees        | salary |
++--------+--------+-------------------------+------------+-------------+--------+
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 |   100000.00 |   NULL |
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |   NULL |
+|      3 | vinit  | mumbai taj 44           | 2001-02-12 | 12000000.01 |   NULL |
+|      4 | vini   | mumbai taj 44           | 2001-02-22 | 12000000.00 |   NULL |
+|      9 | siya   | chembur mahanganga park | 1999-11-23 | 34560000.00 |   NULL |
+|      9 | siya   | chembur mahanganga park | NULL       | 34560000.00 |   NULL |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |   NULL |
+|     22 | NULL   | malbhar hill,pune       | 1999-11-23 |        NULL |   NULL |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |   NULL |
+|     11 | NULL   | NULL                    | 1998-12-22 |        NULL |   NULL |
+|  21222 | tushar | malbhar's  hill,pune    | 1999-11-23 |        NULL |   NULL |
+|    123 | NULL   | NULL                    | NULL       |        NULL | 200000 |
++--------+--------+-------------------------+------------+-------------+--------+
+12 rows in set (0.00 sec)
+
+mysql>

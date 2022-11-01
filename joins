@@ -37,4 +37,33 @@ conn.query("SELECT * FROM users1", function (err, result, fields) {
     if (err) throw err;
     console.log(result);
 });
+var sql="CREATE TABLE products1 (name VARCHAR(255))";
+conn.query(sql,function(err,result){
+    if(err) return err;
+    console.log("Table created")
+})
+var sql="ALTER TABLE products1 ADD COLUMN id INT AUTO_INCREMENT PRIMARY KEY ";
+conn.query(sql,function(err,result){
+    if(err) return err;
+    console.log("Table Altered");
+})
+var sql="INSERT INTO products1 (name VARCHAR(255)) VALUES  ?";
+var values=[
+    ['Chocolate Heaven' ],
+  [ 'Tasty Lemons'],
+  ['Vanilla Dreams']
+   
+
+];
+conn.query(sql,[values],function(err,result){
+        if(err) throw err;
+        console.log("Number of records inserted"+result.affectedRows);
+      console.log(result.affectedRows);
+
+})
+conn.query("SELECT * FROM products1", function (err, result, fields) {
+    if (err) throw err;
+    console.log(result);
+});
+
 });
