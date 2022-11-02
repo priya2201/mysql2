@@ -1,0 +1,71 @@
+mysql> select * from n_tab;
++----+--------+---------+-----------+
+| id | name   | city    | mobile    |
++----+--------+---------+-----------+
+|  1 | tushar | mulund  |      NULL |
+|  1 | tushar | mulund  |      NULL |
+|  2 | priya  | chembur |      NULL |
+|  1 | tushar | mulund  |  99234567 |
+|  3 | priya  | chembur | 787878234 |
+|  1 | tushar | mulund  |      NULL |
+|  1 | tushar | mulund  |    222222 |
++----+--------+---------+-----------+
+7 rows in set (0.00 sec)
+
+mysql> select name from n_tab as o_tab;
++--------+
+| name   |
++--------+
+| tushar |
+| tushar |
+| priya  |
+| tushar |
+| priya  |
+| tushar |
+| tushar |
++--------+
+7 rows in set (0.00 sec)
+
+mysql> select *  from  o_tab;
+ERROR 1146 (42S02): Table 'my_db.o_tab' doesn't exist
+mysql> select name as stu_name from n_tab;
++----------+
+| stu_name |
++----------+
+| tushar   |
+| tushar   |
+| priya    |
+| tushar   |
+| priya    |
+| tushar   |
+| tushar   |
++----------+
+7 rows in set (0.00 sec)
+
+mysql> select name  stu_name from n_tab;
++----------+
+| stu_name |
++----------+
+| tushar   |
+| tushar   |
+| priya    |
+| tushar   |
+| priya    |
+| tushar   |
+| tushar   |
++----------+
+7 rows in set (0.00 sec)
+
+mysql> select name "stu name" from n_tab;
++----------+
+| stu name |
++----------+
+| tushar   |
+| tushar   |
+| priya    |
+| tushar   |
+| priya    |
+| tushar   |
+| tushar   |
++----------+
+7 rows in set (0.00 sec)

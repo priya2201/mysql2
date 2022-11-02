@@ -1,0 +1,362 @@
+Enter password: ************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 94
+Server version: 8.0.30 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create table items (name varchar(20));
+ERROR 1046 (3D000): No database selected
+mysql> use my_db;
+Database changed
+mysql> create table items (name varchar(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> inset into items(name) values('tv'),('fridge'),('washing machine'),('ac'),('mixer'),('grinder'),('cooler');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'inset into items(name) values('tv'),('fridge'),('washing machine'),('ac'),('mixe' at line 1
+mysql> insert into items(name) values('tv'),('fridge'),('washing machine'),('ac'),('mixer'),('grinder'),('cooler');
+Query OK, 7 rows affected (0.00 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> select * from items;
++-----------------+
+| name            |
++-----------------+
+| tv              |
+| fridge          |
+| washing machine |
+| ac              |
+| mixer           |
+| grinder         |
+| cooler          |
++-----------------+
+7 rows in set (0.00 sec)
+
+mysql> alter table items
+    -> add column item_no int(5) not null primary;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+mysql> alter table items
+    -> add column item_no int(5) not null primary key;
+ERROR 1062 (23000): Duplicate entry '0' for key 'items.PRIMARY'
+mysql> alter table items
+    -> add column item_no int(5) not null ;
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> select * from items;
++-----------------+---------+
+| name            | item_no |
++-----------------+---------+
+| tv              |       0 |
+| fridge          |       0 |
+| washing machine |       0 |
+| ac              |       0 |
+| mixer           |       0 |
+| grinder         |       0 |
+| cooler          |       0 |
++-----------------+---------+
+7 rows in set (0.00 sec)
+
+mysql> alter table items
+    -> add column item_no1 int(5) not null auto increment,
+    -> add primary key(item_no1);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto increment,
+add primary key(item_no1)' at line 2
+mysql> alter table items
+    -> add column item_no1 int(5) not null auto increment,
+    -> alter table items
+    -> ^C
+mysql> alter table items
+    -> add column item_n int(5) not null primary auto increment,
+    -> add primary key(item_n);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto increment,
+add primary key(item_n)' at line 2
+mysql> alter table items
+    -> add column item_no1 int(5) not null auto_increment,
+    -> add primary key(item_no1);
+Query OK, 0 rows affected, 1 warning (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> select * from items;
++-----------------+---------+----------+
+| name            | item_no | item_no1 |
++-----------------+---------+----------+
+| tv              |       0 |        1 |
+| fridge          |       0 |        2 |
+| washing machine |       0 |        3 |
+| ac              |       0 |        4 |
+| mixer           |       0 |        5 |
+| grinder         |       0 |        6 |
+| cooler          |       0 |        7 |
++-----------------+---------+----------+
+7 rows in set (0.00 sec)
+
+mysql> alter table items
+    -> add column item_no1 int(5) not null auto_increment primary key first,
+    -> add column unique_id int(5) not null auto_increment after item_no;
+ERROR 1060 (42S21): Duplicate column name 'item_no1'
+mysql> alter table items
+    -> add column item_no2 int(5) not null auto_increment primary key first,
+    -> add column unique_id int(5) not null auto_increment after item_no;
+ERROR 1075 (42000): Incorrect table definition; there can be only one auto column and it must be defined as a key
+mysql> alter table items
+    -> add column item_no2 int(5) not null auto increment first,
+    -> add column unique_id int(5) not null after item_no;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto increment first,
+add column unique_id int(5) not null after item_no' at line 2
+mysql> alter table items
+    -> add column item_no2 int(5) not null first,
+    -> add column unique_id int(5) not null after item_no;
+Query OK, 0 rows affected, 2 warnings (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 2
+
+mysql> select * from items;
++----------+-----------------+---------+-----------+----------+
+| item_no2 | name            | item_no | unique_id | item_no1 |
++----------+-----------------+---------+-----------+----------+
+|        0 | tv              |       0 |         0 |        1 |
+|        0 | fridge          |       0 |         0 |        2 |
+|        0 | washing machine |       0 |         0 |        3 |
+|        0 | ac              |       0 |         0 |        4 |
+|        0 | mixer           |       0 |         0 |        5 |
+|        0 | grinder         |       0 |         0 |        6 |
+|        0 | cooler          |       0 |         0 |        7 |
++----------+-----------------+---------+-----------+----------+
+7 rows in set (0.00 sec)
+
+mysql> alter table items
+    -> add column item_no2 int(5) not null auto_increment first,
+    -> add column unique_id int(5) not null after item_no;
+ERROR 1060 (42S21): Duplicate column name 'item_no2'
+mysql> create table accessories(name varchar(10));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> inset into items(accessories) values('tv'),('fridge'),('washing machine'),('ac'),('mixer'),('grinder'),('cooler');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'inset into items(accessories) values('tv'),('fridge'),('washing machine'),('ac')' at line 1
+mysql> inset into accessories values('tv'),('fridge'),('washing machine'),('ac'),('mixer'),('grinder'),('cooler');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'inset into accessories values('tv'),('fridge'),('washing machine'),('ac'),('mixe' at line 1
+mysql> inset into accessories(name)  values('tv'),('fridge'),('washing machine'),('ac'),('mixer'),('grinder'),('cooler');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'inset into accessories(name)  values('tv'),('fridge'),('washing machine'),('ac')' at line 1
+mysql> insert into accessories(name)  values('tv'),('fridge'),('washing machine'),('ac'),('mixer'),('grinder'),('cooler');
+ERROR 1406 (22001): Data too long for column 'name' at row 3
+mysql> alter table
+    -> add name varchar(25);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add name varchar(25)' at line 2
+mysql> insert into accessories(name)  values('tv'),('fridge'),('ac'),('mixer'),('grinder'),('cooler');
+Query OK, 6 rows affected (0.00 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from accessories;
++---------+
+| name    |
++---------+
+| tv      |
+| fridge  |
+| ac      |
+| mixer   |
+| grinder |
+| cooler  |
++---------+
+6 rows in set (0.00 sec)
+
+mysql> alter table accessories
+    -> add column id int(10) not null auto_increment primary key first,
+    -> add column seller_id int(10) unique key after name;
+Query OK, 0 rows affected, 2 warnings (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 2
+
+mysql> select * from accessories;
++----+---------+-----------+
+| id | name    | seller_id |
++----+---------+-----------+
+|  1 | tv      |      NULL |
+|  2 | fridge  |      NULL |
+|  3 | ac      |      NULL |
+|  4 | mixer   |      NULL |
+|  5 | grinder |      NULL |
+|  6 | cooler  |      NULL |
++----+---------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> desc accessories;
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| id        | int         | NO   | PRI | NULL    | auto_increment |
+| name      | varchar(10) | YES  |     | NULL    |                |
+| seller_id | int         | YES  | UNI | NULL    |                |
++-----------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> alter table accessories
+    -> add constraint unique key(name);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc accessories;
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| id        | int         | NO   | PRI | NULL    | auto_increment |
+| name      | varchar(10) | YES  | UNI | NULL    |                |
+| seller_id | int         | YES  | UNI | NULL    |                |
++-----------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> alter table accessories
+    -> change column name p_name varchar(50);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc accessories;
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| id        | int         | NO   | PRI | NULL    | auto_increment |
+| p_name    | varchar(50) | YES  | UNI | NULL    |                |
+| seller_id | int         | YES  | UNI | NULL    |                |
++-----------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> alter table accessories
+    -> change column p_name pro_name varchar(50),
+    -> a=change column id a_id int(10);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'a=change column id a_id int(10)' at line 3
+mysql> alter table accessories
+    -> change column p_name pro_name varchar(50),
+    -> change column id p_id int(10);
+Query OK, 6 rows affected, 1 warning (0.05 sec)
+Records: 6  Duplicates: 0  Warnings: 1
+
+mysql> desc accessories;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| p_id      | int         | NO   | PRI | NULL    |       |
+| pro_name  | varchar(50) | YES  | UNI | NULL    |       |
+| seller_id | int         | YES  | UNI | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table items
+    -> change column pro_name product_name varchar(20) first,
+    -> change column seller_id sale_id int(5) after pro_name;
+ERROR 1054 (42S22): Unknown column 'pro_name' in 'items'
+mysql> alter table items
+    -> change column pro_name product_name varchar(20) first,
+    -> change column seller_id sale_id int(5) after product_name;
+ERROR 1054 (42S22): Unknown column 'pro_name' in 'items'
+mysql> select * from accessories
+    ->
+    -> ^C
+mysql> select * from accessories;
++------+----------+-----------+
+| p_id | pro_name | seller_id |
++------+----------+-----------+
+|    1 | tv       |      NULL |
+|    2 | fridge   |      NULL |
+|    3 | ac       |      NULL |
+|    4 | mixer    |      NULL |
+|    5 | grinder  |      NULL |
+|    6 | cooler   |      NULL |
++------+----------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> alter table accessories
+    -> change column seller_id sale_id int(5) after pro_name,
+    -> change column pro_name product_name varchar(20) first;
+ERROR 1054 (42S22): Unknown column 'pro_name' in 'accessories'
+mysql> alter table accessories
+    -> change column p_name product_name varchar(20) first;
+ERROR 1054 (42S22): Unknown column 'p_name' in 'accessories'
+mysql> alter table accessories
+    -> change column pro_name product_name varchar(20);
+Query OK, 6 rows affected (0.04 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from accessories;
++------+--------------+-----------+
+| p_id | product_name | seller_id |
++------+--------------+-----------+
+|    1 | tv           |      NULL |
+|    2 | fridge       |      NULL |
+|    3 | ac           |      NULL |
+|    4 | mixer        |      NULL |
+|    5 | grinder      |      NULL |
+|    6 | cooler       |      NULL |
++------+--------------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> alter table accessories
+    -> change column seller_id sale_id int(5) after product_name,
+    -> add product_name after seller_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'after seller_id' at line 3
+mysql> alter table accessories
+    -> change column seller_id sale_id int(5) after product_name;
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> desc accessories;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| p_id         | int         | NO   | PRI | NULL    |       |
+| product_name | varchar(20) | YES  | UNI | NULL    |       |
+| sale_id      | int         | YES  | UNI | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table tab
+    -> (
+    -> id int unique key,
+    -> name varchar (30)
+    -> )
+    ->
+    -> ^C
+mysql> create table tab
+    -> (
+    -> id int unique key,
+    -> name varchar (30)
+    -> )
+    ->
+    ->
+    ->
+    ->
+    -> ^C
+mysql> create table tab
+    -> (
+    -> id int unique key,
+    -> name varchar (30)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc tab;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int         | YES  | UNI | NULL    |       |
+| name  | varchar(30) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> alter table tab
+    -> change column id stu_id int(10) not null primary key auto_increment ;
+Query OK, 0 rows affected, 1 warning (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> desc tab;
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| stu_id | int         | NO   | PRI | NULL    | auto_increment |
+| name   | varchar(30) | YES  |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql>

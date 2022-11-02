@@ -1,0 +1,197 @@
+Enter password: ************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 91
+Server version: 8.0.30 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use my_db;
+Database changed
+mysql> create table ap_tab
+    -> (
+    -> id int NOT NULL AUTO_INCREMENT,
+    -> name varchar(50),
+    -> city varchar(60),
+    -> primary key(id)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc ap_tab();
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '()' at line 1
+mysql> desc ap_tab;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int         | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(50) | YES  |     | NULL    |                |
+| city  | varchar(60) | YES  |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+3 rows in set (0.03 sec)
+
+mysql> insert unto ap_tab (name,city) values('pia','delhi');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ap_tab (name,city) values('pia','delhi')' at line 1
+mysql> insert into ap_tab (name,city) values('pia','delhi');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> selct * from ap_tab;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selct * from ap_tab' at line 1
+mysql> select * from ap_tab;
++----+------+-------+
+| id | name | city  |
++----+------+-------+
+|  1 | pia  | delhi |
++----+------+-------+
+1 row in set (0.00 sec)
+
+mysql> insert into ap_tab (name,city) values('vini','kolkata');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into ap_tab (id,name,city) values(NULL,'vini','kolkata');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> selct * from ap_tab;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selct * from ap_tab' at line 1
+mysql> select * from ap_tab;
++----+------+---------+
+| id | name | city    |
++----+------+---------+
+|  1 | pia  | delhi   |
+|  2 | vini | kolkata |
+|  3 | vini | kolkata |
++----+------+---------+
+3 rows in set (0.00 sec)
+
+mysql> insert into ap_tab (id,name,city) values(NULL,'nikki','mulund');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from ap_tab;
++----+-------+---------+
+| id | name  | city    |
++----+-------+---------+
+|  1 | pia   | delhi   |
+|  2 | vini  | kolkata |
+|  3 | vini  | kolkata |
+|  4 | nikki | mulund  |
++----+-------+---------+
+4 rows in set (0.00 sec)
+
+mysql> insert into ap_tab (id,name,city) values(NULL,'shani','chembur'),;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> insert into ap_tab (id,name,city) values(NULL,'shani','chembur'),
+    -> (5,'tina','chennai');
+ERROR 1062 (23000): Duplicate entry '5' for key 'ap_tab.PRIMARY'
+mysql> select * from ap_tab;
++----+-------+---------+
+| id | name  | city    |
++----+-------+---------+
+|  1 | pia   | delhi   |
+|  2 | vini  | kolkata |
+|  3 | vini  | kolkata |
+|  4 | nikki | mulund  |
++----+-------+---------+
+4 rows in set (0.00 sec)
+
+mysql> insert into ap_tab (id,name,city) values(52,'mahi','mahim');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from ap_tab;
++----+-------+---------+
+| id | name  | city    |
++----+-------+---------+
+|  1 | pia   | delhi   |
+|  2 | vini  | kolkata |
+|  3 | vini  | kolkata |
+|  4 | nikki | mulund  |
+| 52 | mahi  | mahim   |
++----+-------+---------+
+5 rows in set (0.00 sec)
+
+mysql> insert into ap_tab (name,city) values('tushhi','thane');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from ap_tab;
++----+--------+---------+
+| id | name   | city    |
++----+--------+---------+
+|  1 | pia    | delhi   |
+|  2 | vini   | kolkata |
+|  3 | vini   | kolkata |
+|  4 | nikki  | mulund  |
+| 52 | mahi   | mahim   |
+| 53 | tushhi | thane   |
++----+--------+---------+
+6 rows in set (0.00 sec)
+
+mysql> create table k_tab
+    -> (
+    -> id int not null auto_increment primary key,
+    -> name varchar(50)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc k_tab;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int         | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(50) | YES  |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> alter table k_tab id auto_increment = 12;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'id auto_increment = 12' at line 1
+mysql> alter table k_tab  auto_increment = 12;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert ito k_tab('pia'),('ram');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'k_tab('pia'),('ram')' at line 1
+mysql> insert ito k_tab(name) values ('pia'),('ram');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'k_tab(name) values ('pia'),('ram')' at line 1
+mysql> insert into k_tab(name) values ('pia'),('ram');
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into k_tab('siya'),('shyam');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''siya'),('shyam')' at line 1
+mysql> insert into k_tab(name) values ('siya'),('shyam');
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from k_tab;
++----+-------+
+| id | name  |
++----+-------+
+| 12 | pia   |
+| 13 | ram   |
+| 14 | siya  |
+| 15 | shyam |
++----+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into k_tab values('karena');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into k_tab values('','karena');
+ERROR 1366 (HY000): Incorrect integer value: '' for column 'id' at row 1
+mysql> insert into k_tab values(null,'karena');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from k_tab;
++----+--------+
+| id | name   |
++----+--------+
+| 12 | pia    |
+| 13 | ram    |
+| 14 | siya   |
+| 15 | shyam  |
+| 16 | karena |
++----+--------+
+5 rows in set (0.00 sec)
+
+mysql>

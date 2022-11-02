@@ -1,0 +1,481 @@
+Enter password: ************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 96
+Server version: 8.0.30 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use my_db;
+Database changed
+mysql> show tables;
++-----------------+
+| Tables_in_my_db |
++-----------------+
+| accessories     |
+| ap_tab          |
+| department      |
+| employee        |
+| info            |
+| items           |
+| k_tab           |
+| my_tab          |
+| n_tab           |
+| p_tab           |
+| y_tab           |
++-----------------+
+11 rows in set (0.00 sec)
+
+mysql> select * from employee;
++--------+------+--------+
+| emp_id | name | city   |
++--------+------+--------+
+|      1 | pia  | mumbai |
+|      2 | vini | mumbai |
++--------+------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from info;
++--------+--------+-------------------------+------------+-------------+--------+
+| stu_id | name   | address                 | dob        | fees        | salary |
++--------+--------+-------------------------+------------+-------------+--------+
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 |   100000.00 |   NULL |
+|      2 | priya  | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |   NULL |
+|      3 | vinit  | mumbai taj 44           | 2001-02-12 | 12000000.01 |   NULL |
+|      4 | vini   | mumbai taj 44           | 2001-02-22 | 12000000.00 |   NULL |
+|      9 | siya   | chembur mahanganga park | 1999-11-23 | 34560000.00 |   NULL |
+|      9 | siya   | chembur mahanganga park | NULL       | 34560000.00 |   NULL |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |   NULL |
+|     22 | NULL   | malbhar hill,pune       | 1999-11-23 |        NULL |   NULL |
+|      9 | NULL   | NULL                    | 1999-11-23 |        NULL |   NULL |
+|     11 | NULL   | NULL                    | 1998-12-22 |        NULL |   NULL |
+|   2222 | NULL   | malbhar's  hill,pune    | 1999-11-23 |        NULL |   NULL |
+|  21222 | tushar | malbhar's  hill,pune    | 1999-11-23 |        NULL |   NULL |
+|    123 | NULL   | NULL                    | NULL       |        NULL | 200000 |
++--------+--------+-------------------------+------------+-------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> update table info
+    -> set name='sunanda' and salary=25000
+    -> where stu_id = 2222;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table info
+set name='sunanda' and salary=25000
+where stu_id = 2222' at line 1
+mysql> update info
+    -> set name='sunanda' ,salary=25000
+    -> where stu_id=2222;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select  * from info;
++--------+---------+-------------------------+------------+-------------+--------+
+| stu_id | name    | address                 | dob        | fees        | salary |
++--------+---------+-------------------------+------------+-------------+--------+
+|      2 | priya   | delhi malbar hill 32    | 1999-02-12 |   100000.00 |   NULL |
+|      2 | priya   | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |   NULL |
+|      3 | vinit   | mumbai taj 44           | 2001-02-12 | 12000000.01 |   NULL |
+|      4 | vini    | mumbai taj 44           | 2001-02-22 | 12000000.00 |   NULL |
+|      9 | siya    | chembur mahanganga park | 1999-11-23 | 34560000.00 |   NULL |
+|      9 | siya    | chembur mahanganga park | NULL       | 34560000.00 |   NULL |
+|      9 | NULL    | NULL                    | 1999-11-23 |        NULL |   NULL |
+|     22 | NULL    | malbhar hill,pune       | 1999-11-23 |        NULL |   NULL |
+|      9 | NULL    | NULL                    | 1999-11-23 |        NULL |   NULL |
+|     11 | NULL    | NULL                    | 1998-12-22 |        NULL |   NULL |
+|   2222 | sunanda | malbhar's  hill,pune    | 1999-11-23 |        NULL |  25000 |
+|  21222 | tushar  | malbhar's  hill,pune    | 1999-11-23 |        NULL |   NULL |
+|    123 | NULL    | NULL                    | NULL       |        NULL | 200000 |
++--------+---------+-------------------------+------------+-------------+--------+
+13 rows in set (0.00 sec)
+
+mysql> update  info
+    -> set name='moni',salary=2500000,
+    -> where stu_id = 123;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where stu_id = 123' at line 3
+mysql> update  info
+    -> set name='moni',salary=2500000,
+    -> where stu_id = 123;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where stu_id = 123' at line 3
+mysql> update  info
+    -> set name='moni' salary=2500000
+    -> where stu_id=123;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'salary=2500000
+where stu_id=123' at line 2
+mysql> update  info
+    -> set name='moni',salary=2500000
+    -> where stu_id=123;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from info;
++--------+---------+-------------------------+------------+-------------+---------+
+| stu_id | name    | address                 | dob        | fees        | salary  |
++--------+---------+-------------------------+------------+-------------+---------+
+|      2 | priya   | delhi malbar hill 32    | 1999-02-12 |   100000.00 |    NULL |
+|      2 | priya   | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |    NULL |
+|      3 | vinit   | mumbai taj 44           | 2001-02-12 | 12000000.01 |    NULL |
+|      4 | vini    | mumbai taj 44           | 2001-02-22 | 12000000.00 |    NULL |
+|      9 | siya    | chembur mahanganga park | 1999-11-23 | 34560000.00 |    NULL |
+|      9 | siya    | chembur mahanganga park | NULL       | 34560000.00 |    NULL |
+|      9 | NULL    | NULL                    | 1999-11-23 |        NULL |    NULL |
+|     22 | NULL    | malbhar hill,pune       | 1999-11-23 |        NULL |    NULL |
+|      9 | NULL    | NULL                    | 1999-11-23 |        NULL |    NULL |
+|     11 | NULL    | NULL                    | 1998-12-22 |        NULL |    NULL |
+|   2222 | sunanda | malbhar's  hill,pune    | 1999-11-23 |        NULL |   25000 |
+|  21222 | tushar  | malbhar's  hill,pune    | 1999-11-23 |        NULL |    NULL |
+|    123 | moni    | NULL                    | NULL       |        NULL | 2500000 |
++--------+---------+-------------------------+------------+-------------+---------+
+13 rows in set (0.00 sec)
+
+mysql> alter table info
+    -> add column result varchar(50);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc info;
++---------+---------------+------+-----+---------+-------+
+| Field   | Type          | Null | Key | Default | Extra |
++---------+---------------+------+-----+---------+-------+
+| stu_id  | int           | NO   |     | NULL    |       |
+| name    | varchar(50)   | YES  |     | NULL    |       |
+| address | text          | YES  |     | NULL    |       |
+| dob     | date          | YES  |     | NULL    |       |
+| fees    | decimal(10,2) | YES  |     | NULL    |       |
+| salary  | int           | YES  |     | NULL    |       |
+| result  | varchar(50)   | YES  |     | NULL    |       |
++---------+---------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> update info
+    -> set result =
+    -> case
+    -> when stu_id<=9 and stu_id >=2 then 'upper class'
+    -> when stu_id<=22 and stu_id >=11
+    -> add column result varchar(50);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add column result varchar(50)' at line 6
+mysql> update  info
+    -> set result =
+    -> case
+    -> when stu_id<=9 and stu_id >=2 then 'upper class'
+    -> when stu_id<=125 and stu_id >=10 then 'higher upper class'
+    -> when stu_id<=25000 and stu_id>=2000 then 'ohooo expensive'
+    -> else 'fail'
+    -> end;
+Query OK, 13 rows affected (0.00 sec)
+Rows matched: 13  Changed: 13  Warnings: 0
+
+mysql> select * from info;
++--------+---------+-------------------------+------------+-------------+---------+--------------------+
+| stu_id | name    | address                 | dob        | fees        | salary  | result             |
++--------+---------+-------------------------+------------+-------------+---------+--------------------+
+|      2 | priya   | delhi malbar hill 32    | 1999-02-12 |   100000.00 |    NULL | upper class        |
+|      2 | priya   | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |    NULL | upper class        |
+|      3 | vinit   | mumbai taj 44           | 2001-02-12 | 12000000.01 |    NULL | upper class        |
+|      4 | vini    | mumbai taj 44           | 2001-02-22 | 12000000.00 |    NULL | upper class        |
+|      9 | siya    | chembur mahanganga park | 1999-11-23 | 34560000.00 |    NULL | upper class        |
+|      9 | siya    | chembur mahanganga park | NULL       | 34560000.00 |    NULL | upper class        |
+|      9 | NULL    | NULL                    | 1999-11-23 |        NULL |    NULL | upper class        |
+|     22 | NULL    | malbhar hill,pune       | 1999-11-23 |        NULL |    NULL | higher upper class |
+|      9 | NULL    | NULL                    | 1999-11-23 |        NULL |    NULL | upper class        |
+|     11 | NULL    | NULL                    | 1998-12-22 |        NULL |    NULL | higher upper class |
+|   2222 | sunanda | malbhar's  hill,pune    | 1999-11-23 |        NULL |   25000 | ohooo expensive    |
+|  21222 | tushar  | malbhar's  hill,pune    | 1999-11-23 |        NULL |    NULL | ohooo expensive    |
+|    123 | moni    | NULL                    | NULL       |        NULL | 2500000 | higher upper class |
++--------+---------+-------------------------+------------+-------------+---------+--------------------+
+13 rows in set (0.00 sec)
+
+mysql> delete from info
+    -> where stu_id =9 and dob=null;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from info;
++--------+---------+-------------------------+------------+-------------+---------+--------------------+
+| stu_id | name    | address                 | dob        | fees        | salary  | result             |
++--------+---------+-------------------------+------------+-------------+---------+--------------------+
+|      2 | priya   | delhi malbar hill 32    | 1999-02-12 |   100000.00 |    NULL | upper class        |
+|      2 | priya   | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |    NULL | upper class        |
+|      3 | vinit   | mumbai taj 44           | 2001-02-12 | 12000000.01 |    NULL | upper class        |
+|      4 | vini    | mumbai taj 44           | 2001-02-22 | 12000000.00 |    NULL | upper class        |
+|      9 | siya    | chembur mahanganga park | 1999-11-23 | 34560000.00 |    NULL | upper class        |
+|      9 | siya    | chembur mahanganga park | NULL       | 34560000.00 |    NULL | upper class        |
+|      9 | NULL    | NULL                    | 1999-11-23 |        NULL |    NULL | upper class        |
+|     22 | NULL    | malbhar hill,pune       | 1999-11-23 |        NULL |    NULL | higher upper class |
+|      9 | NULL    | NULL                    | 1999-11-23 |        NULL |    NULL | upper class        |
+|     11 | NULL    | NULL                    | 1998-12-22 |        NULL |    NULL | higher upper class |
+|   2222 | sunanda | malbhar's  hill,pune    | 1999-11-23 |        NULL |   25000 | ohooo expensive    |
+|  21222 | tushar  | malbhar's  hill,pune    | 1999-11-23 |        NULL |    NULL | ohooo expensive    |
+|    123 | moni    | NULL                    | NULL       |        NULL | 2500000 | higher upper class |
++--------+---------+-------------------------+------------+-------------+---------+--------------------+
+13 rows in set (0.00 sec)
+
+mysql> delete from info
+    -> where stu_id =2 and fees=100000;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from info;
++--------+---------+-------------------------+------------+-------------+---------+--------------------+
+| stu_id | name    | address                 | dob        | fees        | salary  | result             |
++--------+---------+-------------------------+------------+-------------+---------+--------------------+
+|      2 | priya   | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |    NULL | upper class        |
+|      3 | vinit   | mumbai taj 44           | 2001-02-12 | 12000000.01 |    NULL | upper class        |
+|      4 | vini    | mumbai taj 44           | 2001-02-22 | 12000000.00 |    NULL | upper class        |
+|      9 | siya    | chembur mahanganga park | 1999-11-23 | 34560000.00 |    NULL | upper class        |
+|      9 | siya    | chembur mahanganga park | NULL       | 34560000.00 |    NULL | upper class        |
+|      9 | NULL    | NULL                    | 1999-11-23 |        NULL |    NULL | upper class        |
+|     22 | NULL    | malbhar hill,pune       | 1999-11-23 |        NULL |    NULL | higher upper class |
+|      9 | NULL    | NULL                    | 1999-11-23 |        NULL |    NULL | upper class        |
+|     11 | NULL    | NULL                    | 1998-12-22 |        NULL |    NULL | higher upper class |
+|   2222 | sunanda | malbhar's  hill,pune    | 1999-11-23 |        NULL |   25000 | ohooo expensive    |
+|  21222 | tushar  | malbhar's  hill,pune    | 1999-11-23 |        NULL |    NULL | ohooo expensive    |
+|    123 | moni    | NULL                    | NULL       |        NULL | 2500000 | higher upper class |
++--------+---------+-------------------------+------------+-------------+---------+--------------------+
+12 rows in set (0.00 sec)
+
+mysql> create table clone_table like info;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> show tables;
++-----------------+
+| Tables_in_my_db |
++-----------------+
+| accessories     |
+| ap_tab          |
+| clone_table     |
+| department      |
+| employee        |
+| info            |
+| items           |
+| k_tab           |
+| my_tab          |
+| n_tab           |
+| p_tab           |
+| y_tab           |
++-----------------+
+12 rows in set (0.00 sec)
+
+mysql> desc clone_table
+    ->
+    -> ^C
+mysql> desc clone_table;
++---------+---------------+------+-----+---------+-------+
+| Field   | Type          | Null | Key | Default | Extra |
++---------+---------------+------+-----+---------+-------+
+| stu_id  | int           | NO   |     | NULL    |       |
+| name    | varchar(50)   | YES  |     | NULL    |       |
+| address | text          | YES  |     | NULL    |       |
+| dob     | date          | YES  |     | NULL    |       |
+| fees    | decimal(10,2) | YES  |     | NULL    |       |
+| salary  | int           | YES  |     | NULL    |       |
+| result  | varchar(50)   | YES  |     | NULL    |       |
++---------+---------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> insert clone_table select * from info;
+Query OK, 12 rows affected (0.00 sec)
+Records: 12  Duplicates: 0  Warnings: 0
+
+mysql> select * from clone_table;
++--------+---------+-------------------------+------------+-------------+---------+--------------------+
+| stu_id | name    | address                 | dob        | fees        | salary  | result             |
++--------+---------+-------------------------+------------+-------------+---------+--------------------+
+|      2 | priya   | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |    NULL | upper class        |
+|      3 | vinit   | mumbai taj 44           | 2001-02-12 | 12000000.01 |    NULL | upper class        |
+|      4 | vini    | mumbai taj 44           | 2001-02-22 | 12000000.00 |    NULL | upper class        |
+|      9 | siya    | chembur mahanganga park | 1999-11-23 | 34560000.00 |    NULL | upper class        |
+|      9 | siya    | chembur mahanganga park | NULL       | 34560000.00 |    NULL | upper class        |
+|      9 | NULL    | NULL                    | 1999-11-23 |        NULL |    NULL | upper class        |
+|     22 | NULL    | malbhar hill,pune       | 1999-11-23 |        NULL |    NULL | higher upper class |
+|      9 | NULL    | NULL                    | 1999-11-23 |        NULL |    NULL | upper class        |
+|     11 | NULL    | NULL                    | 1998-12-22 |        NULL |    NULL | higher upper class |
+|   2222 | sunanda | malbhar's  hill,pune    | 1999-11-23 |        NULL |   25000 | ohooo expensive    |
+|  21222 | tushar  | malbhar's  hill,pune    | 1999-11-23 |        NULL |    NULL | ohooo expensive    |
+|    123 | moni    | NULL                    | NULL       |        NULL | 2500000 | higher upper class |
++--------+---------+-------------------------+------------+-------------+---------+--------------------+
+12 rows in set (0.00 sec)
+
+mysql> create database new_db;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| firstdb            |
+| information_schema |
+| learners           |
+| my_db              |
+| mysql              |
+| mysql2             |
+| new_db             |
+| nodelogin          |
+| performance_schema |
+| sql                |
+| sqlbasics          |
+| students1          |
+| testing            |
++--------------------+
+13 rows in set (0.01 sec)
+
+mysql> use my_db;
+Database changed
+mysql> use new_db
+Database changed
+mysql> show tables
+    -> ^C
+mysql> show tables
+    ->
+    -> ^C
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> create table new_table like my_db.info;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> show tables;
++------------------+
+| Tables_in_new_db |
++------------------+
+| new_table        |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> desc emp;
+ERROR 1146 (42S02): Table 'new_db.emp' doesn't exist
+mysql> desc new_table;
++---------+---------------+------+-----+---------+-------+
+| Field   | Type          | Null | Key | Default | Extra |
++---------+---------------+------+-----+---------+-------+
+| stu_id  | int           | NO   |     | NULL    |       |
+| name    | varchar(50)   | YES  |     | NULL    |       |
+| address | text          | YES  |     | NULL    |       |
+| dob     | date          | YES  |     | NULL    |       |
+| fees    | decimal(10,2) | YES  |     | NULL    |       |
+| salary  | int           | YES  |     | NULL    |       |
+| result  | varchar(50)   | YES  |     | NULL    |       |
++---------+---------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> insert new_table select * from my_db.info;
+Query OK, 12 rows affected (0.00 sec)
+Records: 12  Duplicates: 0  Warnings: 0
+
+mysql> select * from new_table;
++--------+---------+-------------------------+------------+-------------+---------+--------------------+
+| stu_id | name    | address                 | dob        | fees        | salary  | result             |
++--------+---------+-------------------------+------------+-------------+---------+--------------------+
+|      2 | priya   | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |    NULL | upper class        |
+|      3 | vinit   | mumbai taj 44           | 2001-02-12 | 12000000.01 |    NULL | upper class        |
+|      4 | vini    | mumbai taj 44           | 2001-02-22 | 12000000.00 |    NULL | upper class        |
+|      9 | siya    | chembur mahanganga park | 1999-11-23 | 34560000.00 |    NULL | upper class        |
+|      9 | siya    | chembur mahanganga park | NULL       | 34560000.00 |    NULL | upper class        |
+|      9 | NULL    | NULL                    | 1999-11-23 |        NULL |    NULL | upper class        |
+|     22 | NULL    | malbhar hill,pune       | 1999-11-23 |        NULL |    NULL | higher upper class |
+|      9 | NULL    | NULL                    | 1999-11-23 |        NULL |    NULL | upper class        |
+|     11 | NULL    | NULL                    | 1998-12-22 |        NULL |    NULL | higher upper class |
+|   2222 | sunanda | malbhar's  hill,pune    | 1999-11-23 |        NULL |   25000 | ohooo expensive    |
+|  21222 | tushar  | malbhar's  hill,pune    | 1999-11-23 |        NULL |    NULL | ohooo expensive    |
+|    123 | moni    | NULL                    | NULL       |        NULL | 2500000 | higher upper class |
++--------+---------+-------------------------+------------+-------------+---------+--------------------+
+12 rows in set (0.00 sec)
+
+mysql> create table n_table like employee
+    ->
+    -> ^C
+mysql> create table n_table like employee;
+ERROR 1146 (42S02): Table 'new_db.employee' doesn't exist
+mysql> use my_db;
+Database changed
+mysql> create table n_table like employee;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> show tables;
++-----------------+
+| Tables_in_my_db |
++-----------------+
+| accessories     |
+| ap_tab          |
+| clone_table     |
+| department      |
+| employee        |
+| info            |
+| items           |
+| k_tab           |
+| my_tab          |
+| n_tab           |
+| n_table         |
+| p_tab           |
+| y_tab           |
++-----------------+
+13 rows in set (0.00 sec)
+
+mysql> desc n_table;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| emp_id | int         | YES  |     | NULL    |       |
+| name   | varchar(30) | YES  |     | NULL    |       |
+| city   | varchar(20) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert n_table select * from employee;
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from n_table;
++--------+------+--------+
+| emp_id | name | city   |
++--------+------+--------+
+|      1 | pia  | mumbai |
+|      2 | vini | mumbai |
++--------+------+--------+
+2 rows in set (0.00 sec)
+
+mysql> create database hie;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use hie;
+Database changed
+mysql> create table hieetable like my_db.ap_tab;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> show tables;
++---------------+
+| Tables_in_hie |
++---------------+
+| hieetable     |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> desc hieetable;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int         | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(50) | YES  |     | NULL    |                |
+| city  | varchar(60) | YES  |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> insert hieetable select * from my_db.ap_tab;
+Query OK, 6 rows affected (0.00 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from hieetable;
++----+--------+---------+
+| id | name   | city    |
++----+--------+---------+
+|  1 | pia    | delhi   |
+|  2 | vini   | kolkata |
+|  3 | vini   | kolkata |
+|  4 | nikki  | mulund  |
+| 52 | mahi   | mahim   |
+| 53 | tushhi | thane   |
++----+--------+---------+
+6 rows in set (0.00 sec)
+
+mysql>

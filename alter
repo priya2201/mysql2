@@ -1,0 +1,97 @@
+Enter password: ************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 92
+Server version: 8.0.30 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use my_db;
+Database changed
+mysql> alter table n_tab add column m_no int(11);
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> alter table n_tab add column surname varchar2(30),;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchar2(30),' at line 1
+mysql> alter table n_tab add column surname varchar2(30),
+    -> add column email text;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchar2(30),
+add column email text' at line 1
+mysql> alter table n_tab add column surname varchar2(30),
+    -> add column email TEXT;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchar2(30),
+add column email TEXT' at line 1
+mysql> alter table n_tab add column surname varchar2(30),
+    -> add column email varchar(50);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchar2(30),
+add column email varchar(50)' at line 1
+mysql> alter table n_tab add column surname varchar(30),
+    -> add column email varchar(50);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from n_tab;
++----+--------+---------+-----------+-------+------+---------+-------+
+| id | name   | city    | mobile    | marks | m_no | surname | email |
++----+--------+---------+-----------+-------+------+---------+-------+
+|  1 | tushar | mulund  |      NULL |  NULL | NULL | NULL    | NULL  |
+|  1 | tushar | mulund  |      NULL |  NULL | NULL | NULL    | NULL  |
+|  2 | priya  | chembur |      NULL |  NULL | NULL | NULL    | NULL  |
+|  1 | tushar | mulund  |  99234567 |  NULL | NULL | NULL    | NULL  |
+|  3 | priya  | chembur | 787878234 |  NULL | NULL | NULL    | NULL  |
+|  1 | tushar | mulund  |      NULL |  NULL | NULL | NULL    | NULL  |
+|  1 | tushar | mulund  |    222222 |  NULL | NULL | NULL    | NULL  |
+| 23 | pia    | mumbai  | 989898223 |   320 | NULL | NULL    | NULL  |
+| 24 | vini   | chembur |  99086754 |   440 | NULL | NULL    | NULL  |
++----+--------+---------+-----------+-------+------+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> alter table n_tab add column surname rollno int(5) first;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'rollno int(5) first' at line 1
+mysql> alter table n_tab add column  rollno int(5) first;
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> select * from n_tab;
++--------+----+--------+---------+-----------+-------+------+---------+-------+
+| rollno | id | name   | city    | mobile    | marks | m_no | surname | email |
++--------+----+--------+---------+-----------+-------+------+---------+-------+
+|   NULL |  1 | tushar | mulund  |      NULL |  NULL | NULL | NULL    | NULL  |
+|   NULL |  1 | tushar | mulund  |      NULL |  NULL | NULL | NULL    | NULL  |
+|   NULL |  2 | priya  | chembur |      NULL |  NULL | NULL | NULL    | NULL  |
+|   NULL |  1 | tushar | mulund  |  99234567 |  NULL | NULL | NULL    | NULL  |
+|   NULL |  3 | priya  | chembur | 787878234 |  NULL | NULL | NULL    | NULL  |
+|   NULL |  1 | tushar | mulund  |      NULL |  NULL | NULL | NULL    | NULL  |
+|   NULL |  1 | tushar | mulund  |    222222 |  NULL | NULL | NULL    | NULL  |
+|   NULL | 23 | pia    | mumbai  | 989898223 |   320 | NULL | NULL    | NULL  |
+|   NULL | 24 | vini   | chembur |  99086754 |   440 | NULL | NULL    | NULL  |
++--------+----+--------+---------+-----------+-------+------+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> alter table n_tab add column gender varchar(10) after name;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from n_tab;
++--------+----+--------+--------+---------+-----------+-------+------+---------+-------+
+| rollno | id | name   | gender | city    | mobile    | marks | m_no | surname | email |
++--------+----+--------+--------+---------+-----------+-------+------+---------+-------+
+|   NULL |  1 | tushar | NULL   | mulund  |      NULL |  NULL | NULL | NULL    | NULL  |
+|   NULL |  1 | tushar | NULL   | mulund  |      NULL |  NULL | NULL | NULL    | NULL  |
+|   NULL |  2 | priya  | NULL   | chembur |      NULL |  NULL | NULL | NULL    | NULL  |
+|   NULL |  1 | tushar | NULL   | mulund  |  99234567 |  NULL | NULL | NULL    | NULL  |
+|   NULL |  3 | priya  | NULL   | chembur | 787878234 |  NULL | NULL | NULL    | NULL  |
+|   NULL |  1 | tushar | NULL   | mulund  |      NULL |  NULL | NULL | NULL    | NULL  |
+|   NULL |  1 | tushar | NULL   | mulund  |    222222 |  NULL | NULL | NULL    | NULL  |
+|   NULL | 23 | pia    | NULL   | mumbai  | 989898223 |   320 | NULL | NULL    | NULL  |
+|   NULL | 24 | vini   | NULL   | chembur |  99086754 |   440 | NULL | NULL    | NULL  |
++--------+----+--------+--------+---------+-----------+-------+------+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql>

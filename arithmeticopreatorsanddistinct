@@ -1,0 +1,70 @@
+insert into n_tab (id,name,city,mobile,marks) values(23,'pia','mumbai',989898223,320),(24,'vini','chembur',99086754,440);
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from n_tab;
++----+--------+---------+-----------+-------+
+| id | name   | city    | mobile    | marks |
++----+--------+---------+-----------+-------+
+|  1 | tushar | mulund  |      NULL |  NULL |
+|  1 | tushar | mulund  |      NULL |  NULL |
+|  2 | priya  | chembur |      NULL |  NULL |
+|  1 | tushar | mulund  |  99234567 |  NULL |
+|  3 | priya  | chembur | 787878234 |  NULL |
+|  1 | tushar | mulund  |      NULL |  NULL |
+|  1 | tushar | mulund  |    222222 |  NULL |
+| 23 | pia    | mumbai  | 989898223 |   320 |
+| 24 | vini   | chembur |  99086754 |   440 |
++----+--------+---------+-----------+-------+
+9 rows in set (0.00 sec)
+
+mysql> select id,name,city,marks,marks+100 from n_tab;
++----+--------+---------+-------+-----------+
+| id | name   | city    | marks | marks+100 |
++----+--------+---------+-------+-----------+
+|  1 | tushar | mulund  |  NULL |      NULL |
+|  1 | tushar | mulund  |  NULL |      NULL |
+|  2 | priya  | chembur |  NULL |      NULL |
+|  1 | tushar | mulund  |  NULL |      NULL |
+|  3 | priya  | chembur |  NULL |      NULL |
+|  1 | tushar | mulund  |  NULL |      NULL |
+|  1 | tushar | mulund  |  NULL |      NULL |
+| 23 | pia    | mumbai  |   320 |       420 |
+| 24 | vini   | chembur |   440 |       540 |
++----+--------+---------+-------+-----------+
+9 rows in set (0.00 sec)
+
+mysql> select id,name,city,marks,marks+100 as "New Marks" from n_tab;
++----+--------+---------+-------+-----------+
+| id | name   | city    | marks | New Marks |
++----+--------+---------+-------+-----------+
+|  1 | tushar | mulund  |  NULL |      NULL |
+|  1 | tushar | mulund  |  NULL |      NULL |
+|  2 | priya  | chembur |  NULL |      NULL |
+|  1 | tushar | mulund  |  NULL |      NULL |
+|  3 | priya  | chembur |  NULL |      NULL |
+|  1 | tushar | mulund  |  NULL |      NULL |
+|  1 | tushar | mulund  |  NULL |      NULL |
+| 23 | pia    | mumbai  |   320 |       420 |
+| 24 | vini   | chembur |   440 |       540 |
++----+--------+---------+-------+-----------+
+9 rows in set (0.00 sec)
+
+mysql> select distinct name from n_tab;
++--------+
+| name   |
++--------+
+| tushar |
+| priya  |
+| pia    |
+| vini   |
++--------+
+4 rows in set (0.00 sec)
+
+mysql> select distinct marks from n_tab;
++-------+
+| marks |
++-------+
+|  NULL |
+|   320 |
+|   440 |

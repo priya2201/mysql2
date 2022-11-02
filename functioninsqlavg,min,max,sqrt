@@ -1,0 +1,333 @@
+mysql> select min(id) from hieetable;
++---------+
+| min(id) |
++---------+
+|       1 |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select max(id) from hieetable;
++---------+
+| max(id) |
++---------+
+|      53 |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select sum(id)  as "total id" from hieetable;
++----------+
+| total id |
++----------+
+|      115 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select avg(id)  as "average id" from hieetable;
++------------+
+| average id |
++------------+
+|    19.1667 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select sqrt(salary) from hieetable;
+ERROR 1054 (42S22): Unknown column 'salary' in 'field list'
+mysql> select sqrt(id) from hieetable;
++--------------------+
+| sqrt(id)           |
++--------------------+
+|                  1 |
+| 1.4142135623730951 |
+| 1.7320508075688772 |
+|                  2 |
+|  7.211102550927978 |
+|  7.280109889280518 |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> create table product
+    -> (
+    -> id int(10) ,
+    -> name varchar(50),
+    -> price decimal(7,2));
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+mysql> desc product;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| id    | int          | YES  |     | NULL    |       |
+| name  | varchar(50)  | YES  |     | NULL    |       |
+| price | decimal(7,2) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table product
+    -> add column p_name varchar(50) after name;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc product;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| id     | int          | YES  |     | NULL    |       |
+| name   | varchar(50)  | YES  |     | NULL    |       |
+| p_name | varchar(50)  | YES  |     | NULL    |       |
+| price  | decimal(7,2) | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> modify product
+    -> set id not null unique primary key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'modify product
+set id not null unique primary key' at line 1
+mysql> alter product
+    -> ^C
+mysql> alter table
+    -> add column id as p_id int(10) not null auto_increment after name
+    -> add primary key(p_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add column id as p_id int(10) not null auto_increment after name
+add primary key' at line 2
+mysql> alter table
+    -> add column id as p_id int(10) not null auto_increment after name
+    -> add primary key(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add column id as p_id int(10) not null auto_increment after name
+add primary key' at line 2
+mysql> alter table
+    -> add column id as p_id int(10) not null auto_increment
+    -> add primary key(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add column id as p_id int(10) not null auto_increment
+add primary key(id)' at line 2
+mysql> alter table product
+    -> add column id as p_id int(10) not null auto_increment after name
+    -> add primary key(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'as p_id int(10) not null auto_increment after name
+add primary key(id)' at line 2
+mysql> alter table product
+    -> add column id as p_id int(10) not null auto_increment
+    -> add primary key(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'as p_id int(10) not null auto_increment
+add primary key(id)' at line 2
+mysql> alter table product
+    -> add column id as p_id int(10) not null auto_increment
+    -> add primary key(p_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'as p_id int(10) not null auto_increment
+add primary key(p_id)' at line 2
+mysql> alter table product
+    -> add column id as p_id int(10) not null auto_increment primary key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'as p_id int(10) not null auto_increment primary key' at line 2
+mysql> alter table product
+    -> add column id int(10) not null auto_increment;
+ERROR 1060 (42S21): Duplicate column name 'id'
+mysql> modify table product
+    -> set column id not null auto increment;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'modify table product
+set column id not null auto increment' at line 1
+mysql> update table product
+    -> set column id not null auto increment;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table product
+set column id not null auto increment' at line 1
+mysql> alter table product
+    -> add primary key(id);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc product;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| id     | int          | NO   | PRI | NULL    |       |
+| name   | varchar(50)  | YES  |     | NULL    |       |
+| p_name | varchar(50)  | YES  |     | NULL    |       |
+| price  | decimal(7,2) | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> update table product
+    ->
+    -> ^C
+mysql> alter table product
+    -> add constraint id not null auto_increment primary key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'not null auto_increment primary key' at line 2
+mysql> alter table product
+    -> add constraint id int(10) not null ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'int(10) not null' at line 2
+mysql> alter table product
+    -> add constraint id not null auto_increment ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'not null auto_increment' at line 2
+mysql> alter table product
+    -> add constraint id  not null ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'not null' at line 2
+mysql> alter table product
+    -> add constraint not null (id) ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'not null (id)' at line 2
+mysql> alter table product
+    -> add constraint id as p_id not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'as p_id not null' at line 2
+mysql> alter table product
+    -> change id  p_id not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'not null' at line 2
+mysql> alter table product
+    -> change id  p_id int not null;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc product;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| p_id   | int          | NO   | PRI | NULL    |       |
+| name   | varchar(50)  | YES  |     | NULL    |       |
+| p_name | varchar(50)  | YES  |     | NULL    |       |
+| price  | decimal(7,2) | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table product
+    -> change constraint p_id  not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'constraint p_id  not null' at line 2
+mysql> alter table product
+    -> change constraint p_id  id not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'constraint p_id  id not null' at line 2
+mysql> alter table product
+    -> change p_id as "product Id" primary key auto_increment;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'as "product Id" primary key auto_increment' at line 2
+mysql> alter table product
+    -> change p_id as "product Id" primary key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'as "product Id" primary key' at line 2
+mysql> alter table product
+    -> change p_id int primary key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'int primary key' at line 2
+mysql> alter table product
+    -> change p_id as "product Id" int  primary key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'as "product Id" int  primary key' at line 2
+mysql> alter table product
+    -> change p_id as product_Id int  primary key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'as product_Id int  primary key' at line 2
+mysql> alter table product
+    -> change p_id "product Id" int  primary key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"product Id" int  primary key' at line 2
+mysql> alter table product
+    -> change p_id  product_Id int  primary key;
+ERROR 1068 (42000): Multiple primary key defined
+mysql> insert into product (p_id,name,p_name,price) values(2,'vini','tv',12345.67),
+    -> values(3,'pia','fridge',22345.67);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'values(3,'pia','fridge',22345.67)' at line 2
+mysql> insert into product (p_id,name,p_name,price) values(2,'vini','tv',12345.67),
+    -> (3,'pia','fridge',22345.67);
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from product;
++------+------+--------+----------+
+| p_id | name | p_name | price    |
++------+------+--------+----------+
+|    2 | vini | tv     | 12345.67 |
+|    3 | pia  | fridge | 22345.67 |
++------+------+--------+----------+
+2 rows in set (0.00 sec)
+
+mysql> desc produt;c
+ERROR 1146 (42S02): Table 'hie.produt' doesn't exist
+    ->
+    -> ^C
+mysql> desc product;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| p_id   | int          | NO   | PRI | NULL    |       |
+| name   | varchar(50)  | YES  |     | NULL    |       |
+| p_name | varchar(50)  | YES  |     | NULL    |       |
+| price  | decimal(7,2) | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table product
+    -> add column salary decimal(12,3) unique key;
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table product
+    -> add constraintp_id int auto increment;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto increment' at line 2
+mysql> alter table product
+    -> add constraint p_id int auto increment;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'int auto increment' at line 2
+mysql> alter table product
+    -> add constraint p_id int auto_increment;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'int auto_increment' at line 2
+mysql> alter table product
+    -> alter table product
+    -> add constraint p_id  auto increment;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table product
+add constraint p_id  auto increment' at line 2
+mysql> alter table product
+    -> p_id auto_increment;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'p_id auto_increment' at line 2
+mysql> alter table product
+    -> auto_increment;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+mysql> alter table product
+    -> add constraint p_id  auto increment;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto increment' at line 2
+mysql> alter table product
+    -> change column p_id product_id int(10) auto_increment;
+Query OK, 2 rows affected, 1 warning (0.06 sec)
+Records: 2  Duplicates: 0  Warnings: 1
+
+mysql> desc product;
++------------+---------------+------+-----+---------+----------------+
+| Field      | Type          | Null | Key | Default | Extra          |
++------------+---------------+------+-----+---------+----------------+
+| product_id | int           | NO   | PRI | NULL    | auto_increment |
+| name       | varchar(50)   | YES  |     | NULL    |                |
+| p_name     | varchar(50)   | YES  |     | NULL    |                |
+| price      | decimal(7,2)  | YES  |     | NULL    |                |
+| salary     | decimal(12,3) | YES  | UNI | NULL    |                |
++------------+---------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into product (name,p_name,price,salary) values('vini','tv',12345.67,22345.00),
+    -> ('tushi','ac',11234.56,787878.11);
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from product;
++------------+-------+--------+----------+------------+
+| product_id | name  | p_name | price    | salary     |
++------------+-------+--------+----------+------------+
+|          2 | vini  | tv     | 12345.67 |       NULL |
+|          3 | pia   | fridge | 22345.67 |       NULL |
+|          4 | vini  | tv     | 12345.67 |  22345.000 |
+|          5 | tushi | ac     | 11234.56 | 787878.110 |
++------------+-------+--------+----------+------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table
+    -> change salary as sal decimal(13,4) zerofill;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'change salary as sal decimal(13,4) zerofill' at line 2
+mysql> alter table product
+    -> change salary as sal decimal(13,4) zerofill;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'as sal decimal(13,4) zerofill' at line 2
+mysql> alter table product
+    -> change column salary as sal decimal(13,4) zerofill;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'as sal decimal(13,4) zerofill' at line 2
+mysql> alter table product
+    -> change salary  sal decimal(13,4) zerofill;
+Query OK, 4 rows affected, 1 warning (0.04 sec)
+Records: 4  Duplicates: 0  Warnings: 1
+
+mysql> select * from product;
++------------+-------+--------+----------+----------------+
+| product_id | name  | p_name | price    | sal            |
++------------+-------+--------+----------+----------------+
+|          2 | vini  | tv     | 12345.67 |           NULL |
+|          3 | pia   | fridge | 22345.67 |           NULL |
+|          4 | vini  | tv     | 12345.67 | 000022345.0000 |
+|          5 | tushi | ac     | 11234.56 | 000787878.1100 |
++------------+-------+--------+----------+----------------+
+4 rows in set (0.00 sec)
+
+
+
