@@ -1,0 +1,291 @@
+mysql> create table department3
+    -> (
+    -> id int not null auto_increment,
+    -> name varchar(30) ,
+    -> empid int not null,
+    -> constraint emp_id_fk
+    -> foreign key(empid) references employee1(eid)
+    -> on delete cascade
+    -> );
+ERROR 1075 (42000): Incorrect table definition; there can be only one auto column and it must be defined as a key
+mysql> create table department3
+    -> (
+    -> id int not null auto_increment,
+    -> name varchar(30) ,
+    -> empid int not null,
+    -> constraint emp_id_fk
+    -> ^C
+mysql> create table department3
+    -> (
+    -> id int not null auto_increment primary key,
+    -> name varchar(30) ,
+    -> empid int not null,
+    -> constraint emp_id_fk
+    -> foreign key(empid) references employee1(eid)
+    -> on delete cascade
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from information_schema.table_constraints
+    -> from table_name='department3';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from table_name='department3'' at line 2
+mysql> select * from information_schema.table_constraints
+    -> where table_name='department3';
++--------------------+-------------------+-----------------+--------------+-------------+-----------------+----------+
+| CONSTRAINT_CATALOG | CONSTRAINT_SCHEMA | CONSTRAINT_NAME | TABLE_SCHEMA | TABLE_NAME  | CONSTRAINT_TYPE | ENFORCED |
++--------------------+-------------------+-----------------+--------------+-------------+-----------------+----------+
+| def                | my_db             | PRIMARY         | my_db        | department3 | PRIMARY KEY     | YES      |
+| def                | my_db             | emp_id_fk       | my_db        | department3 | FOREIGN KEY     | YES      |
++--------------------+-------------------+-----------------+--------------+-------------+-----------------+----------+
+2 rows in set (0.00 sec)
+
+mysql> insert into department3 (name,empid) values('pia',1),
+    -> ('Hr',1),('it',2),('sales'3),('it',3),('sales',4);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '3),('it',3),('sales',4)' at line 2
+mysql> insert into department3 (name,empid) values('pia',1),
+    -> ('Hr',1),('it',2),('sales',3),('it',3),('sales',4);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`my_db`.`department3`, CONSTRAINT `emp_id_fk` FOREIGN KEY (`empid`) REFERENCES `employee1` (`eid`) ON DELETE CASCADE)
+mysql> desc employee1;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| eid     | int         | NO   | PRI | NULL    | auto_increment |
+| ename   | varchar(40) | YES  |     | NULL    |                |
+| address | varchar(40) | YES  |     | NULL    |                |
++---------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into department3 (name,empid) values('pia',1),
+    -> ('Hr',1),('it',2),('sales',3),('it',3),('sales',4);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`my_db`.`department3`, CONSTRAINT `emp_id_fk` FOREIGN KEY (`empid`) REFERENCES `employee1` (`eid`) ON DELETE CASCADE)
+mysql> insert into department3 (name,empid) values('pia',1),
+    -> ('Hr',1),('it',2),('sales',3),('it',3),('sales',4);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`my_db`.`department3`, CONSTRAINT `emp_id_fk` FOREIGN KEY (`empid`) REFERENCES `employee1` (`eid`) ON DELETE CASCADE)
+mysql> desc employee1;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| eid     | int         | NO   | PRI | NULL    | auto_increment |
+| ename   | varchar(40) | YES  |     | NULL    |                |
+| address | varchar(40) | YES  |     | NULL    |                |
++---------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from employee1;
++-----+-------+---------+
+| eid | ename | address |
++-----+-------+---------+
+|   1 | pia   | delhi   |
+|   2 | moni  | chennai |
+|   3 | tushi | mumbai  |
++-----+-------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select * from department1;
++-----+-------+-------+
+| did | dname | empid |
++-----+-------+-------+
+|   2 | hr    |     2 |
+|   3 | sales |     3 |
+|   6 | hr    |     2 |
+|   7 | dm    |     2 |
++-----+-------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from department3;
+Empty set (0.00 sec)
+
+mysql> desc department3;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int         | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(30) | YES  |     | NULL    |                |
+| empid | int         | NO   | MUL | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into department3 (name,empid) values ('pia',1),
+    -> ^C
+mysql> insert into department3 (name,empid) values ('pia',1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from department3;
++----+------+-------+
+| id | name | empid |
++----+------+-------+
+| 19 | pia  |     1 |
++----+------+-------+
+1 row in set (0.00 sec)
+
+mysql> insert into department3 (name,empid) values('pia',1),
+    -> ('Hr',1),('it',2),('sales',3),('it',3),('sales',3);
+Query OK, 6 rows affected (0.00 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from department3;
++----+-------+-------+
+| id | name  | empid |
++----+-------+-------+
+| 19 | pia   |     1 |
+| 20 | pia   |     1 |
+| 21 | Hr    |     1 |
+| 22 | it    |     2 |
+| 23 | sales |     3 |
+| 24 | it    |     3 |
+| 25 | sales |     3 |
++----+-------+-------+
+7 rows in set (0.00 sec)
+
+mysql> delete from employee
+    -> where eid=2;
+ERROR 1054 (42S22): Unknown column 'eid' in 'where clause'
+mysql> delete from employee1
+    -> where eid=2;
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`my_db`.`department1`, CONSTRAINT `department1_ibfk_1` FOREIGN KEY (`empid`) REFERENCES `employee1` (`eid`))
+mysql>
+mysql> create table employee2
+    -> (
+    -> eid int not null auto_increment primary key,
+    -> ename varchar(30)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into employee2(name) values ('vini'),('tushi'),('sunanda'),('deva');
+ERROR 1054 (42S22): Unknown column 'name' in 'field list'
+mysql> insert into employee2(ename) values ('vini'),('tushi'),('sunanda'),('deva');
+Query OK, 4 rows affected (0.00 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee2;
++-----+---------+
+| eid | ename   |
++-----+---------+
+|   1 | vini    |
+|   2 | tushi   |
+|   3 | sunanda |
+|   4 | deva    |
++-----+---------+
+4 rows in set (0.00 sec)
+
+mysql> create table department4(
+    -> did int not null auto_increment primary key,
+    -> dname varchar(50),
+    -> empid int not null,
+    -> constraint emp_id_fk1
+    -> foreign key empid refernces rmployee2(eid)
+    -> on delete cascade);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'refernces rmployee2(eid)
+on delete cascade)' at line 6
+mysql> create table department4(
+    -> did int not null auto_increment primary key,
+    -> dname varchar(50),
+    -> empid int not null,
+    -> constraint emp_id_fk1
+    -> foreign key empid references rmployee2(eid)
+    -> on delete cascade);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'references rmployee2(eid)
+on delete cascade)' at line 6
+mysql> create table department4(
+    -> did int not null auto_increment primary key,
+    -> dname varchar(50),
+    -> empid int not null,
+    -> constraint emp_id_fk1
+    -> foreign key empid references rmployee2(eid)
+    -> on delete cascade);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'references rmployee2(eid)
+on delete cascade)' at line 6
+mysql> create table department4(
+    -> did int not null auto_increment primary key,
+    -> dname varchar(50),
+    -> empid int not null,
+    -> constraint emp_id_fk1
+    -> foreign key empid references employee2(eid)
+    -> on delete cascade);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'references employee2(eid)
+on delete cascade)' at line 6
+mysql> mysql> create table department3
+    ->     -> (
+    ->     -> id int not null auto_increment primary key,
+    ->     -> name varchar(30) ,
+    ->     -> empid int not null,
+    ->     -> constraint emp_id_fk
+    ->     -> foreign key(empid) references employee1(eid)
+    ->     -> on delete cascade
+    ->
+    -> ^C
+mysql> create table department4(
+    -> did int not null auto_increment primary key,
+    -> dname varchar(50),
+    -> empid int not null,
+    -> constraint emp_id_fk1
+    -> foreign key empid references employee2(eid)
+    -> on delete cascade);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'references employee2(eid)
+on delete cascade)' at line 6
+mysql> create table department4(
+    -> did int not null auto_increment primary key,
+    -> dname varchar(50),
+    -> empid int not null,
+    -> constraint emp_id_fk1
+    -> foreign key (empid) references employee2(eid)
+    -> on delete cascade);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select * from employee2;
++-----+---------+
+| eid | ename   |
++-----+---------+
+|   1 | vini    |
+|   2 | tushi   |
+|   3 | sunanda |
+|   4 | deva    |
++-----+---------+
+4 rows in set (0.00 sec)
+
+mysql> insert into department4 (dname,empid) values('hr',1),('it',2),('sales',3) ,('it',3),('dm',4);
+Query OK, 5 rows affected (0.00 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from department4;
++-----+-------+-------+
+| did | dname | empid |
++-----+-------+-------+
+|   1 | hr    |     1 |
+|   2 | it    |     2 |
+|   3 | sales |     3 |
+|   4 | it    |     3 |
+|   5 | dm    |     4 |
++-----+-------+-------+
+5 rows in set (0.00 sec)
+
+mysql> delete table employee2
+    -> where eid=1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table employee2
+where eid=1' at line 1
+mysql> delete from employee2
+    -> where eid=1;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from employee2;
++-----+---------+
+| eid | ename   |
++-----+---------+
+|   2 | tushi   |
+|   3 | sunanda |
+|   4 | deva    |
++-----+---------+
+3 rows in set (0.00 sec)
+
+mysql> select * from department4;
++-----+-------+-------+
+| did | dname | empid |
++-----+-------+-------+
+|   2 | it    |     2 |
+|   3 | sales |     3 |
+|   4 | it    |     3 |
+|   5 | dm    |     4 |
++-----+-------+-------+
+4 rows in set (0.00 sec)
+
+mysql>

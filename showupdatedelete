@@ -438,6 +438,7 @@ mysql> select * from n_table;
 mysql> create database hie;
 Query OK, 1 row affected (0.00 sec)
 
+
 mysql> use hie;
 Database changed
 mysql> create table hieetable like my_db.ap_tab;
@@ -478,4 +479,4 @@ mysql> select * from hieetable;
 +----+--------+---------+
 6 rows in set (0.00 sec)
 
-mysql>
+mysql> 

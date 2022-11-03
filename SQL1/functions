@@ -1,0 +1,457 @@
+Enter password: ************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 97
+Server version: 8.0.30 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql>
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| firstdb            |
+| hie                |
+| information_schema |
+| learners           |
+| my_db              |
+| mysql              |
+| mysql2             |
+| new_db             |
+| nodelogin          |
+| performance_schema |
+| sql                |
+| sqlbasics          |
+| students1          |
+| testing            |
++--------------------+
+14 rows in set (0.00 sec)
+
+mysql> use new_db;
+Database changed
+mysql> show tables;
++------------------+
+| Tables_in_new_db |
++------------------+
+| new_table        |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> use my_db;
+Database changed
+mysql> show tables;
++-----------------+
+| Tables_in_my_db |
++-----------------+
+| accessories     |
+| ap_tab          |
+| clone_table     |
+| department      |
+| employee        |
+| info            |
+| items           |
+| k_tab           |
+| my_tab          |
+| n_tab           |
+| n_table         |
+| p_tab           |
+| y_tab           |
++-----------------+
+13 rows in set (0.00 sec)
+
+mysql> use studeuse hie;
+ERROR 1049 (42000): Unknown database 'studeuse'
+mysql> use hie;
+Database changed
+mysql> show tables;
++---------------+
+| Tables_in_hie |
++---------------+
+| hieetable     |
+| product       |
++---------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from product
+    -> ^C
+mysql> select * from product;
++------------+-------+--------+----------+----------------+
+| product_id | name  | p_name | price    | sal            |
++------------+-------+--------+----------+----------------+
+|          2 | vini  | tv     | 12345.67 |           NULL |
+|          3 | pia   | fridge | 22345.67 |           NULL |
+|          4 | vini  | tv     | 12345.67 | 000022345.0000 |
+|          5 | tushi | ac     | 11234.56 | 000787878.1100 |
++------------+-------+--------+----------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> select * , round(price,1) from product;
++------------+-------+--------+----------+----------------+----------------+
+| product_id | name  | p_name | price    | sal            | round(price,1) |
++------------+-------+--------+----------+----------------+----------------+
+|          2 | vini  | tv     | 12345.67 |           NULL |        12345.7 |
+|          3 | pia   | fridge | 22345.67 |           NULL |        22345.7 |
+|          4 | vini  | tv     | 12345.67 | 000022345.0000 |        12345.7 |
+|          5 | tushi | ac     | 11234.56 | 000787878.1100 |        11234.6 |
++------------+-------+--------+----------+----------------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> select * ,round(sal,2) from prroduct;
+ERROR 1146 (42S02): Table 'hie.prroduct' doesn't exist
+mysql> select * ,round(sal,2) from product;
++------------+-------+--------+----------+----------------+--------------+
+| product_id | name  | p_name | price    | sal            | round(sal,2) |
++------------+-------+--------+----------+----------------+--------------+
+|          2 | vini  | tv     | 12345.67 |           NULL |         NULL |
+|          3 | pia   | fridge | 22345.67 |           NULL |         NULL |
+|          4 | vini  | tv     | 12345.67 | 000022345.0000 |     22345.00 |
+|          5 | tushi | ac     | 11234.56 | 000787878.1100 |    787878.11 |
++------------+-------+--------+----------+----------------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> select count (price) from product;
+ERROR 1630 (42000): FUNCTION hie.count does not exist. Check the 'Function Name Parsing and Resolution' section in the Reference Manual
+mysql> create table orders
+    -> (
+    -> orderId int(10) not null,
+    -> custId int(10) not null,
+    -> sellerId int(10) not null
+    -> );
+Query OK, 0 rows affected, 3 warnings (0.02 sec)
+
+mysql> alter table orders
+    -> change sellerId Seller_Id int(10) unique key;
+Query OK, 0 rows affected, 1 warning (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> alter table orders
+    -> change id auto_increment ,
+    -> add primary key(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',
+add primary key(id)' at line 2
+mysql> alter table orders
+    -> change id auto_increment
+    -> add primary key(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add primary key(id)' at line 3
+mysql> alter table orders
+    -> change id auto_increment;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+mysql> alter table orders
+    -> add constraint orderId auto_increment;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto_increment' at line 2
+mysql> alter table orders
+    -> modify orderId int(10) auto_increment;
+ERROR 1075 (42000): Incorrect table definition; there can be only one auto column and it must be defined as a key
+mysql> alter table orders
+    -> modify orderId int(10) auto_increment,
+    -> add primary key(orderId);
+Query OK, 0 rows affected, 1 warning (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> desc orders;
++-----------+------+------+-----+---------+----------------+
+| Field     | Type | Null | Key | Default | Extra          |
++-----------+------+------+-----+---------+----------------+
+| orderId   | int  | NO   | PRI | NULL    | auto_increment |
+| custId    | int  | NO   |     | NULL    |                |
+| Seller_Id | int  | YES  | UNI | NULL    |                |
++-----------+------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into orders (custId,Seller_Id)  values(101,201),
+    -> (102,202),
+    -> (101,203),
+    -> (102,204),
+    -> (103,205),
+    -> (103,206),
+    -> (104,208),
+    -> (109,410);
+Query OK, 8 rows affected (0.00 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> select * from orders;
++---------+--------+-----------+
+| orderId | custId | Seller_Id |
++---------+--------+-----------+
+|       1 |    101 |       201 |
+|       2 |    102 |       202 |
+|       3 |    101 |       203 |
+|       4 |    102 |       204 |
+|       5 |    103 |       205 |
+|       6 |    103 |       206 |
+|       7 |    104 |       208 |
+|       8 |    109 |       410 |
++---------+--------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> select count (custId) from orders;
+ERROR 1630 (42000): FUNCTION hie.count does not exist. Check the 'Function Name Parsing and Resolution' section in the Reference Manual
+mysql> select count (custId) from orders;
+ERROR 1630 (42000): FUNCTION hie.count does not exist. Check the 'Function Name Parsing and Resolution' section in the Reference Manual
+mysql> select count(*) from orders;
++----------+
+| count(*) |
++----------+
+|        8 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select count (ditinct custId) from orders;
+ERROR 1584 (42000): Incorrect parameters in the call to stored function `count`
+mysql> select count (distinct custId) from orders;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'distinct custId) from orders' at line 1
+mysql> select count(ditinct custId) from orders;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'custId) from orders' at line 1
+mysql> select count(distinct custId) from orders;
++------------------------+
+| count(distinct custId) |
++------------------------+
+|                      5 |
++------------------------+
+1 row in set (0.00 sec)
+
+mysql> selct count(Seller_Id) from orders;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selct count(Seller_Id) from orders' at line 1
+mysql> select count(Seller_Id) from orders;
++------------------+
+| count(Seller_Id) |
++------------------+
+|                8 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> select count(distinct custId) from orders where custId=101;
++------------------------+
+| count(distinct custId) |
++------------------------+
+|                      1 |
++------------------------+
+1 row in set (0.00 sec)
+
+mysql> select count( custId) from orders where custId=101;
++----------------+
+| count( custId) |
++----------------+
+|              2 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select count( custId) from orders where custId=102;
++----------------+
+| count( custId) |
++----------------+
+|              2 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select * from product ;
++------------+-------+--------+----------+----------------+
+| product_id | name  | p_name | price    | sal            |
++------------+-------+--------+----------+----------------+
+|          2 | vini  | tv     | 12345.67 |           NULL |
+|          3 | pia   | fridge | 22345.67 |           NULL |
+|          4 | vini  | tv     | 12345.67 | 000022345.0000 |
+|          5 | tushi | ac     | 11234.56 | 000787878.1100 |
++------------+-------+--------+----------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> selct upper(name) from product;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selct upper(name) from product' at line 1
+mysql> select upper(name) from product;
++-------------+
+| upper(name) |
++-------------+
+| VINI        |
+| PIA         |
+| VINI        |
+| TUSHI       |
++-------------+
+4 rows in set (0.00 sec)
+
+mysql> select upper(name) as name1 ,city from product;
+ERROR 1054 (42S22): Unknown column 'city' in 'field list'
+mysql> select upper(name) as name1 ,price from product;
++-------+----------+
+| name1 | price    |
++-------+----------+
+| VINI  | 12345.67 |
+| PIA   | 22345.67 |
+| VINI  | 12345.67 |
+| TUSHI | 11234.56 |
++-------+----------+
+4 rows in set (0.00 sec)
+
+mysql> selct lower(name) from product;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selct lower(name) from product' at line 1
+mysql> select lower(name) from product;
++-------------+
+| lower(name) |
++-------------+
+| vini        |
+| pia         |
+| vini        |
+| tushi       |
++-------------+
+4 rows in set (0.00 sec)
+
+mysql> selct ucase(name) as UNAME ,sal from product;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selct ucase(name) as UNAME ,sal from product' at line 1
+mysql> select ucase(name) as UNAME ,sal from product;
++-------+----------------+
+| UNAME | sal            |
++-------+----------------+
+| VINI  |           NULL |
+| PIA   |           NULL |
+| VINI  | 000022345.0000 |
+| TUSHI | 000787878.1100 |
++-------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> selct mid(name,1,3) as "shortname" from product
+    -> ^C
+mysql> selct mid(name,1,3) as "shortname" from product ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selct mid(name,1,3) as "shortname" from product' at line 1
+mysql> selct mid(name,1,3) as shortname from product ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selct mid(name,1,3) as shortname from product' at line 1
+mysql> select mid(name,1,3) as shortname from product ;
++-----------+
+| shortname |
++-----------+
+| vin       |
+| pia       |
+| vin       |
+| tus       |
++-----------+
+4 rows in set (0.00 sec)
+
+mysql> select substring(name,1,2) as shortname from product ;
++-----------+
+| shortname |
++-----------+
+| vi        |
+| pi        |
+| vi        |
+| tu        |
++-----------+
+4 rows in set (0.00 sec)
+
+mysql> select name length(name) from product;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(name) from product' at line 1
+mysql> select name length(name) from product;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(name) from product' at line 1
+mysql> select name ,length(name) from product;
++-------+--------------+
+| name  | length(name) |
++-------+--------------+
+| vini  |            4 |
+| pia   |            3 |
+| vini  |            4 |
+| tushi |            5 |
++-------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> selct * from product;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selct * from product' at line 1
+mysql> select * from product;
++------------+-------+--------+----------+----------------+
+| product_id | name  | p_name | price    | sal            |
++------------+-------+--------+----------+----------------+
+|          2 | vini  | tv     | 12345.67 |           NULL |
+|          3 | pia   | fridge | 22345.67 |           NULL |
+|          4 | vini  | tv     | 12345.67 | 000022345.0000 |
+|          5 | tushi | ac     | 11234.56 | 000787878.1100 |
++------------+-------+--------+----------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> select name concat(price,p_name) from product;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(price,p_name) from product' at line 1
+mysql> select name concat(p_name,price) from product;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(p_name,price) from product' at line 1
+mysql> select name ,concat(p_name,price) from product;
++-------+----------------------+
+| name  | concat(p_name,price) |
++-------+----------------------+
+| vini  | tv12345.67           |
+| pia   | fridge22345.67       |
+| vini  | tv12345.67           |
+| tushi | ac11234.56           |
++-------+----------------------+
+4 rows in set (0.00 sec)
+
+mysql> select name ,concat(price,p_name) from product;
++-------+----------------------+
+| name  | concat(price,p_name) |
++-------+----------------------+
+| vini  | 12345.67tv           |
+| pia   | 22345.67fridge       |
+| vini  | 12345.67tv           |
+| tushi | 11234.56ac           |
++-------+----------------------+
+4 rows in set (0.00 sec)
+
+mysql> select name ,concat(price,' ' ,p_name) as "Concat" from product;
++-------+-----------------+
+| name  | Concat          |
++-------+-----------------+
+| vini  | 12345.67 tv     |
+| pia   | 22345.67 fridge |
+| vini  | 12345.67 tv     |
+| tushi | 11234.56 ac     |
++-------+-----------------+
+4 rows in set (0.00 sec)
+
+mysql> select name , concat(p_name ,(select mid(price(2,4))) from product;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')) from product' at line 1
+mysql> select name , concat(p_name ,(select mid(price,2,4))) from product;
++-------+-----------------------------------------+
+| name  | concat(p_name ,(select mid(price,2,4))) |
++-------+-----------------------------------------+
+| vini  | tv2345                                  |
+| pia   | fridge2345                              |
+| vini  | tv2345                                  |
+| tushi | ac1234                                  |
++-------+-----------------------------------------+
+4 rows in set (0.00 sec)
+
+mysql> select name , concat(p_name ,',',(select mid(price,2,4))) as mid from product;
++-------+-------------+
+| name  | mid         |
++-------+-------------+
+| vini  | tv,2345     |
+| pia   | fridge,2345 |
+| vini  | tv,2345     |
+| tushi | ac,1234     |
++-------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> select reverse(p_name) from product;
++-----------------+
+| reverse(p_name) |
++-----------------+
+| vt              |
+| egdirf          |
+| vt              |
+| ca              |
++-----------------+
+4 rows in set (0.00 sec)
+
+mysql> select name,p_nam,now() as datetime from product;
+ERROR 1054 (42S22): Unknown column 'p_nam' in 'field list'
+mysql> select name,p_name,now() as datetime from product;
++-------+--------+---------------------+
+| name  | p_name | datetime            |
++-------+--------+---------------------+
+| vini  | tv     | 2022-11-03 10:24:42 |
+| pia   | fridge | 2022-11-03 10:24:42 |
+| vini  | tv     | 2022-11-03 10:24:42 |
+| tushi | ac     | 2022-11-03 10:24:42 |
++-------+--------+---------------------+
+4 rows in set (0.00 sec)
+
+mysql>

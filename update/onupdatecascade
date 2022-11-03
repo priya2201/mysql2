@@ -1,0 +1,120 @@
+mysql> desc employee2;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| eid   | int         | NO   | PRI | NULL    | auto_increment |
+| ename | varchar(30) | YES  |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into employee2 (ename) values ('piyu'),('mahi'),('sunanda'),('pinky');
+Query OK, 4 rows affected (0.00 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee2;
++-----+---------+
+| eid | ename   |
++-----+---------+
+|   2 | tushi   |
+|   5 | piyu    |
+|   6 | mahi    |
+|   7 | sunanda |
+|   8 | pinky   |
++-----+---------+
+5 rows in set (0.00 sec)
+
+mysql> create table department7
+    -> (id int not null auto_increment primary key,
+    ->
+    -> ^C
+mysql> create table department7
+    -> (
+    -> id int not null auto_increment primary key,
+    -> name varchar(30),
+    -> empid int not null,
+    -> constraint emp_update
+    -> foreign key (empid) references employee2(eid)
+    -> on update cascade
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> update table employee2
+    -> ^C
+mysql> update employee2
+    -> set eid=10
+    -> where eid=1;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql>
+mysql> select * from employee2;
++-----+---------+
+| eid | ename   |
++-----+---------+
+|   2 | tushi   |
+|   5 | piyu    |
+|   6 | mahi    |
+|   7 | sunanda |
+|   8 | pinky   |
++-----+---------+
+5 rows in set (0.00 sec)
+
+mysql> update employee2
+    -> set eid=10
+    -> where eid=5;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employee2;
++-----+---------+
+| eid | ename   |
++-----+---------+
+|   2 | tushi   |
+|   6 | mahi    |
+|   7 | sunanda |
+|   8 | pinky   |
+|  10 | piyu    |
++-----+---------+
+5 rows in set (0.00 sec)
+
+mysql> select * from department7;
+Empty set (0.00 sec)
+
+mysql> insert into department7 (name,empid) values('hr',2),('sales',6),('it',7),('sales',8),('sales',8),('hr',8),('dm',10);
+Query OK, 7 rows affected (0.00 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> insert into department7 (name,empid) values('hr',5);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`my_db`.`department7`, CONSTRAINT `emp_update` FOREIGN KEY (`empid`) REFERENCES `employee2` (`eid`) ON UPDATE CASCADE)
+mysql> update employee2
+    -> set eid=12 where eid=8;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employee2;
++-----+---------+
+| eid | ename   |
++-----+---------+
+|   2 | tushi   |
+|   6 | mahi    |
+|   7 | sunanda |
+|  10 | piyu    |
+|  12 | pinky   |
++-----+---------+
+5 rows in set (0.00 sec)
+
+mysql> select * from department7;
++----+-------+-------+
+| id | name  | empid |
++----+-------+-------+
+|  1 | hr    |     2 |
+|  2 | sales |     6 |
+|  3 | it    |     7 |
+|  4 | sales |    12 |
+|  5 | sales |    12 |
+|  6 | hr    |    12 |
+|  7 | dm    |    10 |
++----+-------+-------+
+7 rows in set (0.00 sec)
+
+mysql>

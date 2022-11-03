@@ -1,0 +1,121 @@
+insert into employee1 (ename,address) values('pia','delhi'),
+    -> ('moni','chennai'),('tushi','mumbai'),('niki','bangalore');
+Query OK, 4 rows affected (0.00 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee1;
++-----+-------+-----------+
+| eid | ename | address   |
++-----+-------+-----------+
+|   1 | pia   | delhi     |
+|   2 | moni  | chennai   |
+|   3 | tushi | mumbai    |
+|   4 | niki  | bangalore |
++-----+-------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> desc department1;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| did   | int         | NO   | PRI | NULL    | auto_increment |
+| dname | varchar(40) | YES  |     | NULL    |                |
+| empid | int         | NO   | MUL | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into department (dname,empid) values('IT',1),
+    -> ('hr',2),('sales',3),('hr',4),('It',1),('hr',2),
+    -> ('dm',2),('sales'2);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '2)' at line 3
+mysql> insert into department (dname,empid) values('IT',1),
+    -> ('hr',2),('sales',3),('hr',4),('It',1),('hr',2),
+    -> ('dm',2),('sales',2);
+ERROR 1054 (42S22): Unknown column 'dname' in 'field list'
+mysql> insert into department1 (dname,empid) values('IT',1),
+    -> ('hr',2),('sales',3),('hr',4),('It',1),('hr',2),
+    -> ('dm',2),('sales',2);
+Query OK, 8 rows affected (0.00 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> select * from department1;
++-----+-------+-------+
+| did | dname | empid |
++-----+-------+-------+
+|   1 | IT    |     1 |
+|   2 | hr    |     2 |
+|   3 | sales |     3 |
+|   4 | hr    |     4 |
+|   5 | It    |     1 |
+|   6 | hr    |     2 |
+|   7 | dm    |     2 |
+|   8 | sales |     2 |
++-----+-------+-------+
+8 rows in set (0.00 sec)
+
+mysql> drop table employee1;
+ERROR 3730 (HY000): Cannot drop table 'employee1' referenced by a foreign key constraint 'employee_eid_fk' on table 'department2'.
+mysql> delete from employee1
+    -> ^C
+mysql>
+mysql> delete from department1
+    -> where did =8;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from department1;
++-----+-------+-------+
+| did | dname | empid |
++-----+-------+-------+
+|   1 | IT    |     1 |
+|   2 | hr    |     2 |
+|   3 | sales |     3 |
+|   4 | hr    |     4 |
+|   5 | It    |     1 |
+|   6 | hr    |     2 |
+|   7 | dm    |     2 |
++-----+-------+-------+
+7 rows in set (0.00 sec)
+
+mysql> delete from deartment
+    -> ^C
+mysql>
+mysql> delete from department1
+    -> where empid=4;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from department1;
++-----+-------+-------+
+| did | dname | empid |
++-----+-------+-------+
+|   1 | IT    |     1 |
+|   2 | hr    |     2 |
+|   3 | sales |     3 |
+|   5 | It    |     1 |
+|   6 | hr    |     2 |
+|   7 | dm    |     2 |
++-----+-------+-------+
+6 rows in set (0.00 sec)
+
+mysql> delete from employee1
+    -> where eid=1;
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`my_db`.`department1`, CONSTRAINT `department1_ibfk_1` FOREIGN KEY (`empid`) REFERENCES `employee1` (`eid`))
+mysql> delete from department1
+    -> where eid=1;
+ERROR 1054 (42S22): Unknown column 'eid' in 'where clause'
+mysql> delete from department1
+    -> where empid=1;
+Query OK, 2 rows affected (0.00 sec)
+
+mysql> delete from employee1
+    -> where eid=4;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from employee1;
++-----+-------+---------+
+| eid | ename | address |
++-----+-------+---------+
+|   1 | pia   | delhi   |
+|   2 | moni  | chennai |
+|   3 | tushi | mumbai  |
++-----+-------+---------+
+3 rows in set (0.00 sec)

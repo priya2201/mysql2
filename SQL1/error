@@ -1,0 +1,69 @@
+ysql> use my_db;
+Database changed
+mysql> desc info;
++---------+---------------+------+-----+---------+-------+
+| Field   | Type          | Null | Key | Default | Extra |
++---------+---------------+------+-----+---------+-------+
+| stu_id  | int           | NO   |     | NULL    |       |
+| name    | varchar(50)   | YES  |     | NULL    |       |
+| address | text          | YES  |     | NULL    |       |
+| dob     | date          | YES  |     | NULL    |       |
+| fees    | decimal(10,2) | YES  |     | NULL    |       |
+| salary  | int           | YES  |     | NULL    |       |
+| result  | varchar(50)   | YES  |     | NULL    |       |
++---------+---------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> selct * from info;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selct * from info' at line 1
+mysql> select * from info;
++--------+---------+-------------------------+------------+-------------+---------+--------------------+
+| stu_id | name    | address                 | dob        | fees        | salary  | result             |
++--------+---------+-------------------------+------------+-------------+---------+--------------------+
+|      2 | priya   | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |    NULL | upper class        |
+|      3 | vinit   | mumbai taj 44           | 2001-02-12 | 12000000.01 |    NULL | upper class        |
+|      4 | vini    | mumbai taj 44           | 2001-02-22 | 12000000.00 |    NULL | upper class        |
+|      9 | siya    | chembur mahanganga park | 1999-11-23 | 34560000.00 |    NULL | upper class        |
+|      9 | siya    | chembur mahanganga park | NULL       | 34560000.00 |    NULL | upper class        |
+|      9 | NULL    | NULL                    | 1999-11-23 |        NULL |    NULL | upper class        |
+|     22 | NULL    | malbhar hill,pune       | 1999-11-23 |        NULL |    NULL | higher upper class |
+|      9 | NULL    | NULL                    | 1999-11-23 |        NULL |    NULL | upper class        |
+|     11 | NULL    | NULL                    | 1998-12-22 |        NULL |    NULL | higher upper class |
+|   2222 | sunanda | malbhar's  hill,pune    | 1999-11-23 |        NULL |   25000 | ohooo expensive    |
+|  21222 | tushar  | malbhar's  hill,pune    | 1999-11-23 |        NULL |    NULL | ohooo expensive    |
+|    123 | moni    | NULL                    | NULL       |        NULL | 2500000 | higher upper class |
++--------+---------+-------------------------+------------+-------------+---------+--------------------+
+12 rows in set (0.00 sec)
+
+mysql> update table info
+    -> set fees=20000 where dob='1999/11/23';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table info
+set fees=20000 where dob='1999/11/23'' at line 1
+mysql> update table info
+    -> ^C
+mysql> modify table info
+    -> set fees=20000 where dob='1999/11/23';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'modify table info
+set fees=20000 where dob='1999/11/23'' at line 1
+mysql> alter table info
+    -> add column id int not null auto_increment
+    -> add primary key(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add primary key(id)' at line 3
+mysql> alter table info
+    -> add column id int not null auto_increment;
+ERROR 1075 (42000): Incorrect table definition; there can be only one auto column and it must be defined as a key
+mysql> alter table info
+    -> add column id int not null primary key;
+ERROR 1062 (23000): Duplicate entry '0' for key 'info.PRIMARY'
+mysql> alter table info
+    -> change stu_id int primary key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'int primary key' at line 2
+mysql> alter table info
+    -> change stu_id  primary key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key' at line 2
+mysql> alter table info
+    -> change stu_id id int primary key;
+ERROR 1062 (23000): Duplicate entry '9' for key 'info.PRIMARY'
+mysql> alter table info
+    -> add column id int(10) primary key;
+ERROR 1062 (23000): Duplicate entry '0' for key 'info.PRIMARY'

@@ -1,0 +1,88 @@
+mysql> create table department6
+    -> (
+    -> did int not null auto_increment primary key,
+    -> name varchar(30) ,
+    -> empid int,
+    -> constraint emp_fk_d1
+    -> foreign key(empid) references employee2(eid)
+    -> on delete restrict
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into department6 (name,empid) values('hr',2),('it',2),('sales',2),('it',3),('sales',4);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`my_db`.`department6`, CONSTRAINT `emp_fk_d1` FOREIGN KEY (`empid`) REFERENCES `employee2` (`eid`) ON DELETE RESTRICT)
+mysql> insert into department6 (name,empid) values('hr',2),('it',2),('sales',2),('sales',4);
+Query OK, 4 rows affected (0.00 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee2;
++-----+-------+
+| eid | ename |
++-----+-------+
+|   2 | tushi |
+|   4 | deva  |
++-----+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from department6;
++-----+-------+-------+
+| did | name  | empid |
++-----+-------+-------+
+|   6 | hr    |     2 |
+|   7 | it    |     2 |
+|   8 | sales |     2 |
+|   9 | sales |     4 |
++-----+-------+-------+
+4 rows in set (0.00 sec)
+
+mysql> delete from employee2
+    -> where eid=4;
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`my_db`.`department6`, CONSTRAINT `emp_fk_d1` FOREIGN KEY (`empid`) REFERENCES `employee2` (`eid`) ON DELETE RESTRICT)
+mysql> delete from department6
+    -> where empid =4;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> delete from employee2
+    -> where eid=4;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from department;
++------+----------+
+| d_id | dep_name |
++------+----------+
+|  101 | IT       |
+|  102 | HR       |
+|  103 | sales    |
++------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from department6;
++-----+-------+-------+
+| did | name  | empid |
++-----+-------+-------+
+|   6 | hr    |     2 |
+|   7 | it    |     2 |
+|   8 | sales |     2 |
++-----+-------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from department5;
++-----+-------+-------+
+| did | name  | empid |
++-----+-------+-------+
+|   5 | hr    |     2 |
+|   6 | it    |     2 |
+|   7 | sales |     2 |
+|   8 | it    |  NULL |
++-----+-------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from employee2;
++-----+-------+
+| eid | ename |
++-----+-------+
+|   2 | tushi |
++-----+-------+
+1 row in set (0.00 sec)
+
+mysql>

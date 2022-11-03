@@ -1,0 +1,31 @@
+mysql> desc employee1;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| eid     | int         | NO   | PRI | NULL    | auto_increment |
+| ename   | varchar(40) | YES  |     | NULL    |                |
+| address | varchar(40) | YES  |     | NULL    |                |
++---------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> desc department1;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| did   | int         | NO   | PRI | NULL    | auto_increment |
+| dname | varchar(40) | YES  |     | NULL    |                |
+| empid | int         | NO   | MUL | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> desc department2;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| did   | int         | NO   | PRI | NULL    | auto_increment |
+| dname | varchar(40) | YES  |     | NULL    |                |
+| empid | int         | NO   | MUL | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+

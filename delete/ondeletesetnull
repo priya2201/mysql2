@@ -1,0 +1,69 @@
+mysql> create table department5
+    -> (
+    -> did int not null auto_increment primary key,
+    -> name varchar(30) ,
+    -> empid int,
+    -> constraint emp_fk_d
+    -> foreign key(empid) references employee2(eid)
+    -> on delete set null
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> insert into department5 (name,empid) values('hr',1),('it',2),('sales',2),('it',3);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`my_db`.`department5`, CONSTRAINT `emp_fk_d` FOREIGN KEY (`empid`) REFERENCES `employee2` (`eid`) ON DELETE SET NULL)
+mysql> select * from employee2;
++-----+---------+
+| eid | ename   |
++-----+---------+
+|   2 | tushi   |
+|   3 | sunanda |
+|   4 | deva    |
++-----+---------+
+3 rows in set (0.00 sec)
+
+mysql> insert into department5 (name,empid) values('hr',2),('it',2),('sales',2),('it',3);
+Query OK, 4 rows affected (0.00 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from department5;
++-----+-------+-------+
+| did | name  | empid |
++-----+-------+-------+
+|   5 | hr    |     2 |
+|   6 | it    |     2 |
+|   7 | sales |     2 |
+|   8 | it    |     3 |
++-----+-------+-------+
+4 rows in set (0.00 sec)
+
+mysql> delete efrom employee2
+    -> where eid=3;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'employee2
+where eid=3' at line 1
+mysql> delete from employee22
+    -> ^C
+mysql> delete from employee2
+    -> where eid=3;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from employee2;
++-----+-------+
+| eid | ename |
++-----+-------+
+|   2 | tushi |
+|   4 | deva  |
++-----+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from department5;
++-----+-------+-------+
+| did | name  | empid |
++-----+-------+-------+
+|   5 | hr    |     2 |
+|   6 | it    |     2 |
+|   7 | sales |     2 |
+|   8 | it    |  NULL |
++-----+-------+-------+
+4 rows in set (0.00 sec)
+
+mysql>

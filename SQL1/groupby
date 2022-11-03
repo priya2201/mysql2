@@ -1,0 +1,131 @@
+mysql> insert into info (stu_id,name,address,dob,fees,salary,result) values(33,'sunanda','ulhasnagar great city','2001/1/21',22000,12000,'higher upper class');
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> select * from info;
++--------+---------+-------------------------+------------+-------------+---------+--------------------+
+| stu_id | name    | address                 | dob        | fees        | salary  | result             |
++--------+---------+-------------------------+------------+-------------+---------+--------------------+
+|      2 | priya   | delhi malbar hill 32    | 1999-02-12 | 10000000.00 |    NULL | upper class        |
+|      3 | vinit   | mumbai taj 44           | 2001-02-12 | 12000000.01 |    NULL | upper class        |
+|      4 | vini    | mumbai taj 44           | 2001-02-22 | 12000000.00 |    NULL | upper class        |
+|      9 | siya    | chembur mahanganga park | 1999-11-23 | 34560000.00 |    NULL | upper class        |
+|      9 | siya    | chembur mahanganga park | NULL       | 34560000.00 |    NULL | upper class        |
+|      9 | NULL    | NULL                    | 1999-11-23 |        NULL |    NULL | upper class        |
+|     22 | NULL    | malbhar hill,pune       | 1999-11-23 |        NULL |    NULL | higher upper class |
+|      9 | NULL    | NULL                    | 1999-11-23 |        NULL |    NULL | upper class        |
+|     11 | NULL    | NULL                    | 1998-12-22 |        NULL |    NULL | higher upper class |
+|   2222 | sunanda | malbhar's  hill,pune    | 1999-11-23 |        NULL |   25000 | ohooo expensive    |
+|  21222 | tushar  | malbhar's  hill,pune    | 1999-11-23 |        NULL |    NULL | ohooo expensive    |
+|    123 | moni    | NULL                    | NULL       |        NULL | 2500000 | higher upper class |
+|     33 | sunanda | ulhasnagar great city   | 2001-01-21 |    22000.00 |   12000 | higher upper class |
++--------+---------+-------------------------+------------+-------------+---------+--------------------+
+13 rows in set (0.00 sec)
+
+mysql> select name ,min(salary) from info group by name;
++---------+-------------+
+| name    | min(salary) |
++---------+-------------+
+| priya   |        NULL |
+| vinit   |        NULL |
+| vini    |        NULL |
+| siya    |        NULL |
+| NULL    |        NULL |
+| sunanda |       12000 |
+| tushar  |        NULL |
+| moni    |     2500000 |
++---------+-------------+
+8 rows in set (0.00 sec)
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| firstdb            |
+| hie                |
+| information_schema |
+| learners           |
+| my_db              |
+| mysql              |
+| mysql2             |
+| new_db             |
+| nodelogin          |
+| performance_schema |
+| sql                |
+| sqlbasics          |
+| students1          |
+| testing            |
++--------------------+
+14 rows in set (0.00 sec)
+
+mysql> use hie;
+Database changed
+mysql> sow tables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sow tables' at line 1
+mysql> show tables;
++---------------+
+| Tables_in_hie |
++---------------+
+| hieetable     |
+| orders        |
+| product       |
++---------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from product;
++------------+-------+--------+----------+----------------+
+| product_id | name  | p_name | price    | sal            |
++------------+-------+--------+----------+----------------+
+|          2 | vini  | tv     | 12345.67 |           NULL |
+|          3 | pia   | fridge | 22345.67 |           NULL |
+|          4 | vini  | tv     | 12345.67 | 000022345.0000 |
+|          5 | tushi | ac     | 11234.56 | 000787878.1100 |
++------------+-------+--------+----------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from orders;
++---------+--------+-----------+
+| orderId | custId | Seller_Id |
++---------+--------+-----------+
+|       1 |    101 |       201 |
+|       2 |    102 |       202 |
+|       3 |    101 |       203 |
+|       4 |    102 |       204 |
+|       5 |    103 |       205 |
+|       6 |    103 |       206 |
+|       7 |    104 |       208 |
+|       8 |    109 |       410 |
++---------+--------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> select custId ,count(*) from orders where custId=102;
++--------+----------+
+| custId | count(*) |
++--------+----------+
+|    102 |        2 |
++--------+----------+
+1 row in set (0.00 sec)
+
+mysql> select custId ,count(*) from orders group by custid;
++--------+----------+
+| custId | count(*) |
++--------+----------+
+|    101 |        2 |
+|    102 |        2 |
+|    103 |        2 |
+|    104 |        1 |
+|    109 |        1 |
++--------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select custId ,min(custId) from orders group by custid;
++--------+-------------+
+| custId | min(custId) |
++--------+-------------+
+|    101 |         101 |
+|    102 |         102 |
+|    103 |         103 |
+|    104 |         104 |
+|    109 |         109 |
++--------+-------------+
+5 rows in set (0.00 sec)
+
+mysql>
