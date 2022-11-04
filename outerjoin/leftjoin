@@ -1,0 +1,42 @@
+mysql> select emp.name,dep2.dname from emp left join dep2
+    -> on emp.id=dep2.empid;
++---------+-------+
+| name    | dname |
++---------+-------+
+| pinky   | hr    |
+| heman   | sales |
+| heman   | it    |
+| kunal   | NULL  |
+| komal   | pm    |
+| tushi   | cs    |
+| sunanda | NULL  |
++---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> select emp.name,dep2.dname from dep2 left join emp
+    -> on emp.id=dep2.empid;
++-------+-------+
+| name  | dname |
++-------+-------+
+| pinky | hr    |
+| heman | sales |
+| heman | it    |
+| komal | pm    |
+| tushi | cs    |
++-------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from emp left join dep2
+    -> on emp.id=dep2.empid;
++----+---------+---------+------+-------+-------+
+| id | name    | city    | did  | dname | empid |
++----+---------+---------+------+-------+-------+
+|  2 | pinky   | delhi   |  107 | hr    |     2 |
+|  3 | heman   | chembur |  108 | sales |     3 |
+|  3 | heman   | chembur |  109 | it    |     3 |
+|  4 | kunal   | mulund  | NULL | NULL  |  NULL |
+|  5 | komal   | chennai |  110 | pm    |     5 |
+|  6 | tushi   | kolkata |  111 | cs    |     6 |
+| 10 | sunanda | mumbai  | NULL | NULL  |  NULL |
++----+---------+---------+------+-------+-------+
+7 rows in set (0.00 sec)

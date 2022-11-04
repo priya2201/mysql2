@@ -1,0 +1,286 @@
+
+mysql> create table emp
+    -> (
+    -> id int not null auto_increment primary key,
+    -> name varchar(30)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table dep
+    -> (
+    -> id int not null auto_increment primary key,
+    -> name varchar(30),
+    -> empid int,
+    -> constraint update_fk
+    -> foreign key (empid) references emp(id)
+    -> on update set null
+    -> );
+ERROR 1826 (HY000): Duplicate foreign key constraint name 'update_fk'
+mysql> create table dep
+    -> (
+    -> id int not null auto_increment primary key,
+    -> name varchar(30),
+    -> empid int,
+    -> constraint update_fk_1
+    -> foreign key (empid) references emp(id)
+    -> on update set null
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> insert into emp(name) values('sunanda'),('pinky'),('heman'),('kunal'),('komal'),('tushi');
+Query OK, 6 rows affected (0.00 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> selct * from information_schema.table_constraint
+    -> where table_name='dep';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selct * from information_schema.table_constraint
+where table_name='dep'' at line 1
+mysql> select * from information_schema.table_constraint
+    -> where table_name='dep';
+ERROR 1109 (42S02): Unknown table 'TABLE_CONSTRAINT' in information_schema
+mysql> selct * from information_schema.table_constraints
+    -> where table_name='dep';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selct * from information_schema.table_constraints
+where table_name='dep'' at line 1
+mysql> select * from information_schema.table_constraints
+    -> where table_name='dep';
++--------------------+-------------------+-----------------+--------------+------------+-----------------+----------+
+| CONSTRAINT_CATALOG | CONSTRAINT_SCHEMA | CONSTRAINT_NAME | TABLE_SCHEMA | TABLE_NAME | CONSTRAINT_TYPE | ENFORCED |
++--------------------+-------------------+-----------------+--------------+------------+-----------------+----------+
+| def                | my_db             | PRIMARY         | my_db        | dep        | PRIMARY KEY     | YES      |
+| def                | my_db             | update_fk_1     | my_db        | dep        | FOREIGN KEY     | YES      |
++--------------------+-------------------+-----------------+--------------+------------+-----------------+----------+
+2 rows in set (0.00 sec)
+
+mysql> selct * from emp;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selct * from emp' at line 1
+mysql> selcet * from emp;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selcet * from emp' at line 1
+mysql> select * from emp;
++----+---------+
+| id | name    |
++----+---------+
+|  1 | sunanda |
+|  2 | pinky   |
+|  3 | heman   |
+|  4 | kunal   |
+|  5 | komal   |
+|  6 | tushi   |
++----+---------+
+6 rows in set (0.00 sec)
+
+mysql> insert into dep (name,empid) values('hr',1),('it',2),('sales',3),('dm',3),('hr',4),('ml',1),('sp',1),('cs',5);
+Query OK, 8 rows affected (0.00 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> select * from dep;
++----+-------+-------+
+| id | name  | empid |
++----+-------+-------+
+|  1 | hr    |     1 |
+|  2 | it    |     2 |
+|  3 | sales |     3 |
+|  4 | dm    |     3 |
+|  5 | hr    |     4 |
+|  6 | ml    |     1 |
+|  7 | sp    |     1 |
+|  8 | cs    |     5 |
++----+-------+-------+
+8 rows in set (0.00 sec)
+
+mysql> update emp
+    -> set id=10
+    -> where id=1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> selct * from emp;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selct * from emp' at line 1
+mysql> select * from emp;
++----+---------+
+| id | name    |
++----+---------+
+|  2 | pinky   |
+|  3 | heman   |
+|  4 | kunal   |
+|  5 | komal   |
+|  6 | tushi   |
+| 10 | sunanda |
++----+---------+
+6 rows in set (0.00 sec)
+
+mysql> select * from  dep;
++----+-------+-------+
+| id | name  | empid |
++----+-------+-------+
+|  1 | hr    |  NULL |
+|  2 | it    |     2 |
+|  3 | sales |     3 |
+|  4 | dm    |     3 |
+|  5 | hr    |     4 |
+|  6 | ml    |  NULL |
+|  7 | sp    |  NULL |
+|  8 | cs    |     5 |
++----+-------+-------+
+8 rows in set (0.00 sec)
+
+mysql> create table dep1
+    -> (
+    -> id int not null auto_increment primary key,
+    -> name varchar(30)
+    -> eid int ,
+    -> ^C
+mysql> create table depq
+    -> (
+    -> id int not null auto_increment primary key,
+    -> name varchar(30),
+    -> eid int,
+    -> constraint up_fk
+    -> foreign key eid references emp(id)
+    -> on update restrict
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'references emp(id)
+on update restrict
+)' at line 7
+mysql> create table emp1
+    ->     (
+    ->     id int not null auto_increment primary key,
+    ->      name varchar(30)
+    ->      );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into emp1(name) values('sunanda'),('pinky'),('heman'),('kunal'),('komal'),('tushi');
+Query OK, 6 rows affected (0.00 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from emp1;
++----+---------+
+| id | name    |
++----+---------+
+|  1 | sunanda |
+|  2 | pinky   |
+|  3 | heman   |
+|  4 | kunal   |
+|  5 | komal   |
+|  6 | tushi   |
++----+---------+
+6 rows in set (0.00 sec)
+
+mysql> create table dep1
+    ->      (
+    ->      id int not null auto_increment primary key,
+    ->     name varchar(30),
+    ->      eid int,
+    ->      constraint up_fk
+    ->      foreign key eid references emp1(id)
+    ->      on update restrict
+    ->      );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'references emp1(id)
+     on update restrict
+     )' at line 7
+mysql> create table dep1
+    ->      (
+    ->      id int not null auto_increment primary key,
+    ->     name varchar(30),
+    ->      eid int,
+    ->      constraint up_fk
+    ->      foreign key eid references emp1(id)
+    ->      on update restrict
+    ->      );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'references emp1(id)
+     on update restrict
+     )' at line 7
+mysql> create table dep1
+    ->      (
+    ->      id int not null auto_increment primary key,
+    ->     name varchar(30),
+    ->      eid int,
+    ->      constraint up_fk
+    ->      foreign key eid references emp1(id)
+    ->      on update no action
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'references emp1(id)
+     on update no action
+)' at line 7
+
+mysql> create table dep1
+    ->      (
+    ->      id int not null auto_increment primary key,
+    ->     name varchar(30),
+    ->      eid int,
+    ->      constraint up_fk
+    ->      foreign key eid references emp1(id)
+    ->      on delete no action
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'references emp1(id)
+     on delete no action
+)' at line 7
+mysql> reate table department6
+    ->     (
+    ->      did int not null auto_increment primary key,
+    ->      name varchar(30) ,
+    ->     empid int,
+    ->      constraint emp_fk_d1
+    ->     foreign key(empid) references employee2(eid)
+    ->      on delete restrict
+    ->      );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'reate table department6
+    (
+     did int not null auto_increment primary key,
+' at line 1
+mysql> create table department6
+    ->     (
+    ->      did int not null auto_increment primary key,
+    ->      name varchar(30) ,
+    ->     empid int,
+    ->      constraint emp_fk_d1
+    ->     foreign key(empid) references employee2(eid)
+    ->      on delete restrict
+    ->      );
+ERROR 1050 (42S01): Table 'department6' already exists
+mysql> create table dep1
+    ->      (
+    ->      id int not null auto_increment primary key,
+    ->     name varchar(30),
+    ->      eid int,
+    ->      constraint up_fk
+    ->      foreign key (eid) references emp1(id)
+    ->      on update restrict
+    ->      );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> update emp1
+    -> set id=4
+    -> where id=5;
+ERROR 1062 (23000): Duplicate entry '4' for key 'emp1.PRIMARY'
+mysql> update emp1
+    -> set id=12
+    -> where id=2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from emp1
+    -> ^C
+mysql> select * from emp1;
++----+---------+
+| id | name    |
++----+---------+
+|  1 | sunanda |
+|  3 | heman   |
+|  4 | kunal   |
+|  5 | komal   |
+|  6 | tushi   |
+| 12 | pinky   |
++----+---------+
+6 rows in set (0.00 sec)
+
+mysql> selct * from dep1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selct * from dep1' at line 1
+mysql> seelct * from dep1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'seelct * from dep1' at line 1
+mysql> select * from dep1;
+Empty set (0.00 sec)
+
+mysql> insert into dep1 (name,eid) values('hr',1),('sales',1),('it',2);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`my_db`.`dep1`, CONSTRAINT `up_fk` FOREIGN KEY (`eid`) REFERENCES `emp1` (`id`) ON UPDATE RESTRICT)
+mysql>

@@ -1,0 +1,527 @@
+mysql> create table empman
+    -> (
+    -> empid int(11) not null primary key,
+    -> name varchar(40) ,
+    -> manid int(11)
+    -> );
+Query OK, 0 rows affected, 2 warnings (0.02 sec)
+
+mysql> alter table empman
+    -> auto_increment =1;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into empman (name,manid) values('rahul',3),('jay',3),('sonam',4),('kunal',5),('ram',6),('rani',null),('veeru',6);
+ERROR 1364 (HY000): Field 'empid' doesn't have a default value
+mysql> desc empman;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| empid | int         | NO   | PRI | NULL    |       |
+| name  | varchar(40) | YES  |     | NULL    |       |
+| manid | int         | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table empman
+    -> add empid int auto_incre,ent;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto_incre,ent' at line 2
+mysql> alter table empman
+    -> add empid int auto_increment;
+ERROR 1060 (42S21): Duplicate column name 'empid'
+mysql> alter table empman
+    -> empid auto_increment
+    -> ^C
+mysql> alter table empman
+    -> empid auto_increment;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'empid auto_increment' at line 2
+mysql> alter table empman
+    -> modify empid int(10) auto_increment;
+Query OK, 0 rows affected, 1 warning (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> desc empman;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| empid | int         | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(40) | YES  |     | NULL    |                |
+| manid | int         | YES  |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into empman (name,manid) values('rahul',3),('jay',3),('sonam',4),('kunal',5),('ram',6),('rani',null),('veeru',6);
+Query OK, 7 rows affected (0.00 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> select * from empman;
++-------+-------+-------+
+| empid | name  | manid |
++-------+-------+-------+
+|     1 | rahul |     3 |
+|     2 | jay   |     3 |
+|     3 | sonam |     4 |
+|     4 | kunal |     5 |
+|     5 | ram   |     6 |
+|     6 | rani  |  NULL |
+|     7 | veeru |     6 |
++-------+-------+-------+
+7 rows in set (0.00 sec)
+
+mysql> select e.name name ,m.name manager
+    -> from empman e
+    -> inner join empman m
+    -> on e.manid=m.empid;
++-------+---------+
+| name  | manager |
++-------+---------+
+| rahul | sonam   |
+| jay   | sonam   |
+| sonam | kunal   |
+| kunal | ram     |
+| ram   | rani    |
+| veeru | rani    |
++-------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select e.name name ,m.name manager
+    ->     -> from empman e
+    ->     -> inner join empman m
+    ->     -> on m.empid=e.manid;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-> from empman e
+    -> inner join empman m
+    -> on m.empid=e.manid' at line 2
+mysql> select e.name name ,m.name manager
+    -> from empman e
+    -> inner join empman m
+    -> on m.empid=e.manid;
++-------+---------+
+| name  | manager |
++-------+---------+
+| rahul | sonam   |
+| jay   | sonam   |
+| sonam | kunal   |
+| kunal | ram     |
+| ram   | rani    |
+| veeru | rani    |
++-------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select e.name name ,m.name manager
+    -> from empman e
+    -> inner join empman m
+    -> on m.manid=e.empid;
++-------+---------+
+| name  | manager |
++-------+---------+
+| sonam | rahul   |
+| sonam | jay     |
+| kunal | sonam   |
+| ram   | kunal   |
+| rani  | ram     |
+| rani  | veeru   |
++-------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select e.name name ,m.name manager
+    -> from empman e
+    -> left join empman m
+    -> on e.manid=m.empid;
++-------+---------+
+| name  | manager |
++-------+---------+
+| rahul | sonam   |
+| jay   | sonam   |
+| sonam | kunal   |
+| kunal | ram     |
+| ram   | rani    |
+| rani  | NULL    |
+| veeru | rani    |
++-------+---------+
+7 rows in set (0.00 sec)
+
+mysql> select * from student;
+ERROR 1146 (42S02): Table 'my_db.student' doesn't exist
+mysql> create table student
+    -> (
+    -> id int not null auto_increment primary key,
+    -> nmaevarchar(40) ,
+    ->
+    -> ^C
+mysql> create table student
+    -> (
+    -> id int not null auto_increment primary key,
+    -> name varchar(40)
+    -> ^C
+mysql> create table student
+    -> (
+    -> id int not null auto_increment primary key,
+    -> name varchar(40) ,
+    -> city varchar(40)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into student(name,city) values('rahul','delhi'),('jay','kol'),('sonam','delhi'),(
+    -> 'kunal','hyd'),('ram','delhi') ,('rani','patna'),('veeru','kol');
+Query OK, 7 rows affected (0.00 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++----+-------+-------+
+| id | name  | city  |
++----+-------+-------+
+|  1 | rahul | delhi |
+|  2 | jay   | kol   |
+|  3 | sonam | delhi |
+|  4 | kunal | hyd   |
+|  5 | ram   | delhi |
+|  6 | rani  | patna |
+|  7 | veeru | kol   |
++----+-------+-------+
+7 rows in set (0.00 sec)
+
+mysql> select s1.anme Name,s2.city City
+    -> from student s1
+    -> inner join student s2
+    -> on s1.city=s2.city and s1.name='rahul';
+ERROR 1054 (42S22): Unknown column 's1.anme' in 'field list'
+mysql> select s1.name Name,s2.city City
+    -> from student s1
+    -> inner join student s2
+    -> on s1.city=s2.city and s1.name='rahul';
++-------+-------+
+| Name  | City  |
++-------+-------+
+| rahul | delhi |
+| rahul | delhi |
+| rahul | delhi |
++-------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select s2.name Name,s2.city City
+    -> from student s1
+    -> inner join student s2
+    -> on s1.city=s2.city and s1.name='rahul';
++-------+-------+
+| Name  | City  |
++-------+-------+
+| rahul | delhi |
+| sonam | delhi |
+| ram   | delhi |
++-------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select ifnull('geeky','shows') as example;
++---------+
+| example |
++---------+
+| geeky   |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select ifnull(null,'shows') as example;
++---------+
+| example |
++---------+
+| shows   |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select e.name Name ,ifnull(m.name,"No Manager) as manager
+    "> from empman e
+    "> left join empman m
+    "> on e.manid=m.empid;
+    ">
+    "> ^C
+mysql> select e.name Name ,ifnull(m.name,"No Manager) as manager
+    "> from empman e
+    "> left join empman m
+    "> on e.manid=m.empid;
+    ">
+    ">
+    ">
+    ">
+    ">
+    ">
+    ">
+    ">
+    "> ^C
+mysql> select e.name name,ifnull(m.name,'no manager') as manager
+    -> from empman e
+    -> left join empman m
+    -> on e.manid=m.empid;
++-------+------------+
+| name  | manager    |
++-------+------------+
+| rahul | sonam      |
+| jay   | sonam      |
+| sonam | kunal      |
+| kunal | ram        |
+| ram   | rani       |
+| rani  | no manager |
+| veeru | rani       |
++-------+------------+
+7 rows in set (0.00 sec)
+
+mysql> select coalesce (null,'No Manager') as example;
++------------+
+| example    |
++------------+
+| No Manager |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select coalesce ('hiee','No Manager') as example;
++---------+
+| example |
++---------+
+| hiee    |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select e.name name,coalesce(m.name,'no manager') as manager
+    -> select e.name name,ifnull(m.name,'no manager') as manager
+    -> ^C
+mysql> select e.name name,ifnull(m.name,'no manager') as manager
+    -> from empman e
+    -> left join empman m
+    -> on e.manid=m.empid;
++-------+------------+
+| name  | manager    |
++-------+------------+
+| rahul | sonam      |
+| jay   | sonam      |
+| sonam | kunal      |
+| kunal | ram        |
+| ram   | rani       |
+| rani  | no manager |
+| veeru | rani       |
++-------+------------+
+7 rows in set (0.00 sec)
+
+mysql> select e.name Name ,coalsece(m.name,"No Manager) as manager
+    "> from empman e
+    "> left join empman m
+    "> on e.manid=m.empid;
+    ">
+    "> ^C
+mysql> select e.name name,coalesce(m.name,'no manager') as manager
+    -> from empman e
+    -> left join empman m
+    -> on e.manid=m.empid;
++-------+------------+
+| name  | manager    |
++-------+------------+
+| rahul | sonam      |
+| jay   | sonam      |
+| sonam | kunal      |
+| kunal | ram        |
+| ram   | rani       |
+| rani  | no manager |
+| veeru | rani       |
++-------+------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from student;
++----+-------+-------+
+| id | name  | city  |
++----+-------+-------+
+|  1 | rahul | delhi |
+|  2 | jay   | kol   |
+|  3 | sonam | delhi |
+|  4 | kunal | hyd   |
+|  5 | ram   | delhi |
+|  6 | rani  | patna |
+|  7 | veeru | kol   |
++----+-------+-------+
+7 rows in set (0.00 sec)
+
+mysql> select * from employee;
++--------+------+--------+
+| emp_id | name | city   |
++--------+------+--------+
+|      1 | pia  | mumbai |
+|      2 | vini | mumbai |
++--------+------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from emp;
++----+---------+---------+
+| id | name    | city    |
++----+---------+---------+
+|  2 | pinky   | delhi   |
+|  3 | heman   | chembur |
+|  4 | kunal   | mulund  |
+|  5 | komal   | chennai |
+|  6 | tushi   | kolkata |
+| 10 | sunanda | mumbai  |
++----+---------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select name from student
+    -> union
+    -> select name from emp;
++---------+
+| name    |
++---------+
+| rahul   |
+| jay     |
+| sonam   |
+| kunal   |
+| ram     |
+| rani    |
+| veeru   |
+| pinky   |
+| heman   |
+| komal   |
+| tushi   |
+| sunanda |
++---------+
+12 rows in set (0.00 sec)
+
+mysql> select name as studentname from student
+    -> union
+    -> select name as studentname from emp;
++-------------+
+| studentname |
++-------------+
+| rahul       |
+| jay         |
+| sonam       |
+| kunal       |
+| ram         |
+| rani        |
+| veeru       |
+| pinky       |
+| heman       |
+| komal       |
+| tushi       |
+| sunanda     |
++-------------+
+12 rows in set (0.00 sec)
+
+mysql> select name as studentname from student
+    -> union
+    -> select name as studentname from emp order by studentname;
++-------------+
+| studentname |
++-------------+
+| heman       |
+| jay         |
+| komal       |
+| kunal       |
+| pinky       |
+| rahul       |
+| ram         |
+| rani        |
+| sonam       |
+| sunanda     |
+| tushi       |
+| veeru       |
++-------------+
+12 rows in set (0.00 sec)
+
+mysql> select name as studentname from emp
+    -> union
+    -> select name as studentname from student order by studentname;
++-------------+
+| studentname |
++-------------+
+| heman       |
+| jay         |
+| komal       |
+| kunal       |
+| pinky       |
+| rahul       |
+| ram         |
+| rani        |
+| sonam       |
+| sunanda     |
+| tushi       |
+| veeru       |
++-------------+
+12 rows in set (0.00 sec)
+
+mysql> select name from student
+    -> union all
+    -> select name from emp;
++---------+
+| name    |
++---------+
+| rahul   |
+| jay     |
+| sonam   |
+| kunal   |
+| ram     |
+| rani    |
+| veeru   |
+| pinky   |
+| heman   |
+| kunal   |
+| komal   |
+| tushi   |
+| sunanda |
++---------+
+13 rows in set (0.00 sec)
+
+mysql> select name from student
+    -> union all
+    -> select name from emp order by name;
++---------+
+| name    |
++---------+
+| heman   |
+| jay     |
+| komal   |
+| kunal   |
+| kunal   |
+| pinky   |
+| rahul   |
+| ram     |
+| rani    |
+| sonam   |
+| sunanda |
+| tushi   |
+| veeru   |
++---------+
+13 rows in set (0.00 sec)
+
+mysql> select name from emp
+    -> union all
+    -> select name from student;
++---------+
+| name    |
++---------+
+| pinky   |
+| heman   |
+| kunal   |
+| komal   |
+| tushi   |
+| sunanda |
+| rahul   |
+| jay     |
+| sonam   |
+| kunal   |
+| ram     |
+| rani    |
+| veeru   |
++---------+
+13 rows in set (0.00 sec)
+
+mysql> select name from emp
+    -> intersect
+    -> select name from student;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select name from student' at line 3
+mysql> select name from emp
+    -> except
+    -> select name from student;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'except
+select name from student' at line 2
+mysql> mysql --console
+    -> ^C
+mysql> mysqld --console
+    ->
+    -> ^C
+mysql> cd bin
+    -> ^C
+mysql> mysql --console

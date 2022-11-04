@@ -1,0 +1,51 @@
+mysql> create table course
+    -> (
+    -> coursecode varchar(40),
+    -> date date,
+    -> cname varchar(40),
+    -> seat int,
+    -> remain int,
+    -> room int,
+    -> recepa int,
+    -> primary key(coursecode,date)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc course;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| coursecode | varchar(40) | NO   | PRI | NULL    |       |
+| date       | date        | NO   | PRI | NULL    |       |
+| cname      | varchar(40) | YES  |     | NULL    |       |
+| seat       | int         | YES  |     | NULL    |       |
+| remain     | int         | YES  |     | NULL    |       |
+| room       | int         | YES  |     | NULL    |       |
+| recepa     | int         | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> insert into course values(c125,'2014/01/12','c programming',12,5,101,15);
+ERROR 1054 (42S22): Unknown column 'c125' in 'field list'
+mysql> insert into course values('c125','2014/01/12','c programming',12,5,101,15);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> insert into course values('ds144','2014/01/12','data structure',45,22,102,50) , ('c125','2014/07/21','c programming',15,11,101,15);
+Query OK, 2 rows affected, 2 warnings (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 2
+
+mysql> insert into course values('j678','2014/08/11','java programming',15,2,102,50);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> select * from course;
++------------+------------+------------------+------+--------+------+--------+
+| coursecode | date       | cname            | seat | remain | room | recepa |
++------------+------------+------------------+------+--------+------+--------+
+| c125       | 2014-01-12 | c programming    |   12 |      5 |  101 |     15 |
+| c125       | 2014-07-21 | c programming    |   15 |     11 |  101 |     15 |
+| ds144      | 2014-01-12 | data structure   |   45 |     22 |  102 |     50 |
+| j678       | 2014-08-11 | java programming |   15 |      2 |  102 |     50 |
++------------+------------+------------------+------+--------+------+--------+
+4 rows in set (0.00 sec)
+
+mysql>
